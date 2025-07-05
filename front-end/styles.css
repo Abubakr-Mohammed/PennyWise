@@ -62,6 +62,18 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+.card-amount.income
+{
+  color:#2ecc71;
+}
+
+.card-amount.expense 
+{
+  color:#f50606;
+}
+
+
+
 /* ================================
    🧾 FORM SECTION – Person C
    Styles input fields and form layout
