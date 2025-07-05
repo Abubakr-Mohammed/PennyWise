@@ -72,6 +72,12 @@ body {
   color:#f50606;
 }
 
+.card li
+{
+   display: flex;
+   justify-content: space-between;  
+}
+
 
 
 /* ================================
