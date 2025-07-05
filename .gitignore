@@ -1,0 +1,14 @@
+# Cursor editor settings and configurations
+.cursor/
+
+# Environment variables and sensitive data (API keys, passwords, etc.)
+.env
+
+# Python virtual environment folder
+venv/
+
+# macOS system files
+.DS_Store
+
+# Python bytecode cache files
+__pycache__/
