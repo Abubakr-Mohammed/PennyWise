@@ -2,6 +2,8 @@
 
 ## Overview
 
+A financial tracking system where users can add, delete, and edit transactions, log in to access their account, view charts, and receive personalized financial advice. Bonus features include financial advising and currency conversion.
+
 ### Project Structure
 ```
 back-end/
