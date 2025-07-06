@@ -62,23 +62,18 @@ body {
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.card-amount.income
-{
-  color:#2ecc71;
+.card-amount.income {
+  color: #2ecc71;
 }
 
-.card-amount.expense 
-{
-  color:#f50606;
+.card-amount.expense {
+  color: #f50606;
 }
 
-.card li
-{
-   display: flex;
-   justify-content: space-between;  
+.card li {
+  display: flex;
+  justify-content: space-between;
 }
-
-
 
 /* ================================
    🧾 FORM SECTION – Person C
@@ -100,6 +95,10 @@ body {
 .form-section form {
   display: flex;
   flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 1rem;
 }
 
 .form-section label {
