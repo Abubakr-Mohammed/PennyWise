@@ -79,40 +79,63 @@
     <section id="transaction-form" class="form-section">
       <h2>Add New Transaction</h2>
 
-      <form>
-        <!-- Description Field -->
-        <label for="desc">Description:</label>
-        <input 
-          type="text" 
-          id="desc" 
-          name="desc" 
-          placeholder="e.g., Grocery shopping" 
-        />
+      <form class="transaction-form">
+    
+    <!-- Description Field -->
+    <div class="form-group">
+      <label for="desc" class="form-label">Description:</label>
+      <input
+        type="text"
+        id="desc"
+        name="desc"
+        class="form-input"
+        placeholder="e.g., Grocery shopping"
+        required
+      />
+    </div>
 
-        <!-- Amount Field -->
-        <label for="amount">Amount:</label>
-        <input 
-          type="number" 
-          id="amount" 
-          name="amount" 
-          placeholder="e.g., -50.00" 
-        />
+    <!-- Amount Field -->
+    <div class="form-group">
+      <label for="amount" class="form-label">Amount:</label>
+      <input
+        type="number"
+        id="amount"
+        name="amount"
+        class="form-input"
+        placeholder="e.g., -50.00"
+        required
+      />
+    </div>
 
-        <!-- Type Dropdown -->
-        <label for="type">Type:</label>
-        <select id="type" name="type">
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
+    <!-- Type Dropdown -->
+    <div class="form-group">
+      <label for="type" class="form-label">Type:</label>
+      <select id="type" name="type" class="form-input" required>
+        <option value="income">Income</option>
+        <option value="expense">Expense</option>
+      </select>
+    </div>
 
-        <!-- (Optional) Date Field -->
-        <label for="date">Date:</label>
-        <input type="date" id="date" name="date" />
+    <!-- Date Field -->
+    <div class="form-group">
+      <label for="date" class="form-label">Date:</label>
+      <input
+        type="date"
+        id="date"
+        name="date"
+        class="form-input"
+      />
+    </div>
 
-        <!-- Submit Button -->
-        <button type="submit">Add Transaction</button>
-      </form>
-    </section>
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button type="submit" class="submit-button">Add Transaction</button>
+    </div>
+    
+  </form>
+</section>
+
+      
 
   </main>
 
