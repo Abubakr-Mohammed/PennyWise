@@ -119,7 +119,7 @@ body {
 }
 
 /* ================================
-   🧾 FORM SECTION – Person C
+   🧾 FORM SECTION i.e. Transaction form – Person C
    Styles input fields and form layout
 ================================== */
 .form-section {
@@ -136,12 +136,16 @@ body {
 }
 
 .form-section form {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* makes 'form' a flex container along with all direct children */
+  flex-wrap: wrap; /* allows wrapping into new rows when not enough horizontal space */
+  gap: 1rem;  /* the consistent spacing between fields */
+  justify-content: space-between; /* A flexbox property that puts the first field to far left and last field to the far right */
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  flex: 1 1 48%; /* each takes nearly half of the row */
+  display: flex;
+  flex-direction: column; /* stacks the label above the input i.e. a vertical layout inside each group instead of the default inline (horizontal) layout */
 }
 
 .form-section label {
@@ -169,4 +173,11 @@ body {
 
 .form-section button:hover {
   background-color: #0056b3;
+}
+
+/*Ensuring the button is aligned properly*/
+.form-group.button-group {
+  flex: 1 1 100%; /*widens the button field to the full length of row*/
+  display: flex;
+  justify-content: flex-end; /*aligns the button to right or end of container*/
 }
