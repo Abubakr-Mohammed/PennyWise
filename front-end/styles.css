@@ -1,3 +1,4 @@
+
 /* ================================
    🌐 BASE STYLING
    Applies to all elements globally
@@ -55,24 +56,74 @@ body {
   margin-bottom: 2rem;
 }
 
+.card h2 
+{
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #343a40 ;
+  border-bottom: 2px solid #000000;
+} 
+
 .card {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-.card-amount.income {
+.card:hover
+{
+  transform: translateY(-25px);
+  cursor: pointer;
+}
+
+
+.income-card:hover
+{
+    box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
+
+}
+
+
+.balance-card:hover
+{
+    box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
+
+}
+
+.expense-card:hover
+{
+    box-shadow: 0 8px 16px rgb(250, 1, 1);
+
+}
+
+.transaction-card:hover
+{
+    box-shadow: 0 8px 16px rgb(1, 42, 250);
+
+}
+
+
+.card-amount.income 
+{
   color: #2ecc71;
+  font-size: large;
+  font-weight: 600;
 }
 
-.card-amount.expense {
+.card-amount.expense 
+{
   color: #f50606;
+  font-size: large;
+  font-weight: 600;
 }
 
-.card li {
+.card li 
+{
   display: flex;
+  font-weight: 700;
   justify-content: space-between;
+  padding: 0.2rem;
 }
 
 /* ================================
