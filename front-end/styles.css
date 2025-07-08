@@ -177,7 +177,7 @@ body {
 
 /*Ensuring the button is aligned properly*/
 .form-group.button-group {
-  flex: 1 1 100%; /*widens the button field to the full length of row*/
+  flex: 1 1 100%; /* widens the button field to the full length of row */
   display: flex;
-  justify-content: flex-end; /*aligns the button to right or end of container*/
+  justify-content: flex-end; /* aligns the button to right or end of container */
 }
