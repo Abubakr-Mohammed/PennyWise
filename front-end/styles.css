@@ -73,19 +73,11 @@ body {
 
 .card:hover
 {
-  transform: translateY(-25px);
+  transform: translateY(-8px);
   cursor: pointer;
 }
 
-
-.income-card:hover
-{
-    box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
-
-}
-
-
-.balance-card:hover
+.income-card:hover,.balance-card:hover
 {
     box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
 
