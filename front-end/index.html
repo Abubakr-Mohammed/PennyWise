@@ -3,141 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Finance Tracker</title>
+  <title>Pennywise</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
   <!-- 🌐 NAVIGATION BAR -->
-  <!-- Optional: Can be enhanced by anyone with logo or links -->
   <nav class="navbar">
-    <h1>My Finance App</h1>
+    <h1>Pennywise</h1>
     <ul>
       <li><a href="#">Dashboard</a></li>
-      <li><a href="#">Add Transaction</a></li>
+      <li><a href="#" id="open-form">Add Transaction</a></li>
     </ul>
   </nav>
 
-  <main>
-
-    <!-- ==============================
-         📊 DASHBOARD SECTION – Person B
-         =================================
-         STEPS:
-         1. Add 2–4 .card elements inside this section.
-         2. Each card should display a summary item: 
-            e.g., Total Balance, Income, Expenses, Recent Transactions.
-         3. Add static placeholder content (text, fake amounts).
-         4. Optional: Use basic layout or grid as shown in CSS.
-    -->
-    <section id="dashboard" class="dashboard">
-      <!-- Total Balance Card -->
-
-      <div class="card balance-card">
-        <h2>Total Balance</h2>
-        <span class="card-amount income ">+$5,725.40</span>
-      </div>
+  <main class="main-grid">
     
-      <!-- Income Card-->
-
-      <div class="card income-card">
-        <h2>Income</h2>
-        <span class="card-amount income ">+$4,000.00</span>   
-      </div>
-
-      <!-- Expenses Card -->
-
-      <div class="card expense-card">  
-        <h2>Expenses</h2>
-        <span class="card-amount expense">-$2,126.48</span> 
-      </div>
-      
-      <!-- Recent Transactions Card -->
-       
-      <div class="card transaction-card">
-        <h2>Recent Transactions</h2>
-        <ul>
-          <li>Grocery Shopping <span class="card-amount  expense"> -$320.00</span> </li>
-          <li>Car Insurance <span class="card-amount  expense">-$125.00</span></li>
-          <li>Rent Payment<span class="card-amount  expense">-$1,250.00 </span></li>
-          <li>Carrier Payment<span class="card-amount  expense">-$50.00</span></li>
-          <li>Utilities fees <span class="card-amount  expense">-$100.00</span></li>
-          <li>Salary <span class="card-amount  income">+$4,000.00</span>  </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ==============================
-         🧾 TRANSACTION FORM – Person C
-         =================================
-         STEPS:
-         1. Add inputs for: Description, Amount, Type (Income/Expense), Date (optional).
-         2. Group labels and inputs clearly.
-         3. Add a submit button at the bottom.
-         4. Use placeholder text to show expected input.
-    -->
-    <section id="transaction-form" class="form-section">
-      <h2>Add New Transaction</h2>
-
-      <form class="transaction-form">
-    
-    <!-- Description Field -->
-    <div class="form-group">
-      <label for="desc" class="form-label">Description:</label>
-      <input
-        type="text"
-        id="desc"
-        name="desc"
-        class="form-input"
-        placeholder="e.g., Grocery shopping"
-        required
-      />
+    <!-- 🔲 INCOME SECTION (top-left) -->
+    <div class="card income-card">
+      <h2>Income</h2>
+      <span class="card-amount income">+$4,000.00</span>   
     </div>
 
-    <!-- Amount Field -->
-    <div class="form-group">
-      <label for="amount" class="form-label">Amount:</label>
-      <input
-        type="number"
-        id="amount"
-        name="amount"
-        class="form-input"
-        placeholder="e.g., -50.00"
-        required
-      />
+    <!-- 🔲 EXPENSE SECTION (top-left) -->
+    <div class="card expense-card">  
+      <h2>Expenses</h2>
+      <span class="card-amount expense">-$2,126.48</span> 
     </div>
 
-    <!-- Type Dropdown -->
-    <div class="form-group">
-      <label for="type" class="form-label">Type:</label>
-      <select id="type" name="type" class="form-input" required>
-        <option value="income">Income</option>
-        <option value="expense">Expense</option>
-      </select>
+    <!-- 🧾 RECENT TRANSACTIONS (bottom-left) -->
+    <div class="card transaction-card">
+      <h2>Recent Transactions</h2>
+      <ul>
+        <li>Grocery Shopping <span class="card-amount expense">-$320.00</span></li>
+        <li>Car Insurance <span class="card-amount expense">-$125.00</span></li>
+        <li>Rent Payment <span class="card-amount expense">-$1,250.00</span></li>
+        <li>Carrier Payment <span class="card-amount expense">-$50.00</span></li>
+        <li>Utilities fees <span class="card-amount expense">-$100.00</span></li>
+        <li>Salary <span class="card-amount income">+$4,000.00</span></li>
+      </ul>
     </div>
 
-    <!-- Date Field -->
-    <div class="form-group">
-      <label for="date" class="form-label">Date:</label>
-      <input
-        type="date"
-        id="date"
-        name="date"
-        class="form-input"
-      />
+    <!-- 💰 TOTAL BALANCE (bottom-left) -->
+    <div class="card balance-card">
+      <h2>Total Balance</h2>
+      <span class="card-amount income">+$5,725.40</span>
     </div>
 
-    <!-- Submit Button -->
-    <div class="form-group button-group">
-      <button type="submit" class="submit-button">Add Transaction</button>
+    <!-- 👋 WELCOME SECTION (right side) -->
+    <div class="card welcome-card">
+      <h2>Welcome to Pennywise</h2>
+      <p>
+        Track your finances with ease. Add income or expenses,
+        review your transaction history, and maintain control of your money.
+      </p>
+      <p>
+        Use the "Add Transaction" button above to begin!
+      </p>
     </div>
     
-  </form>
-</section>
-
-      
-
   </main>
 
+  <!-- 🔲 TRANSACTION FORM MODEL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <section id="transaction-form" class="form-section">
+        <h2>Add New Transaction</h2>
+        <form class="transaction-form">
+          <div class="form-group">
+            <label for="desc" class="form-label">Description:</label>
+            <input type="text" id="desc" name="desc" class="form-input" placeholder="e.g., Grocery shopping" required />
+          </div>
+
+          <div class="form-group">
+            <label for="amount" class="form-label">Amount:</label>
+            <input type="number" id="amount" name="amount" class="form-input" placeholder="e.g., 50.00" required />
+          </div>
+
+          <div class="form-group">
+            <label for="type" class="form-label">Type:</label>
+            <select id="type" name="type" class="form-input" required>
+              <option value="income">Income</option>
+              <option value="expense">Expense</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" name="date" class="form-input" />
+          </div>
+
+          <div class="form-group button-group">
+            <button type="submit" class="submit-button">Add Transaction</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
 </body>
 </html>

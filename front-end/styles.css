@@ -1,7 +1,6 @@
-
 /* ================================
-   🌐 BASE STYLING
-   Applies to all elements globally
+   🌐 BASE STYLING – Person A
+   General setup applied to all elements
 ================================== */
 * {
   margin: 0;
@@ -16,8 +15,10 @@ body {
   padding: 20px;
 }
 
+
 /* ================================
-   🧭 NAVIGATION BAR
+   🧭 NAVIGATION BAR – Shared
+   Styles the header navigation at the top
 ================================== */
 .navbar {
   display: flex;
@@ -45,25 +46,21 @@ body {
   text-decoration: none;
 }
 
+
 /* ================================
-   📊 DASHBOARD SECTION – Person B
-   Layout for financial summaries
+   🧱 MAIN GRID LAYOUT – Person B
+   Add layout grid for positioning:
+   Income / Expense top-left
+   Recent Tx / Balance bottom-left
+   Welcome panel on the right
 ================================== */
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
+/* TODO: Add .main-grid display: grid; with appropriate template-columns and grid-area styles */
 
-.card h2 
-{
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #343a40 ;
-  border-bottom: 2px solid #000000;
-} 
 
+/* ================================
+   📊 DASHBOARD CARDS – Person B
+   Individual card styles like Income, Expense, Balance, Transactions
+================================== */
 .card {
   background-color: #fff;
   padding: 1.5rem;
@@ -71,56 +68,58 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
-.card:hover
-{
+.card h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #343a40;
+  border-bottom: 2px solid #000;
+}
+
+.card:hover {
   transform: translateY(-8px);
   cursor: pointer;
 }
 
-.income-card:hover,.balance-card:hover
-{
-    box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
-
+/* Optional hover styles for specific cards */
+.income-card:hover,
+.balance-card:hover {
+  box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
 }
 
-.expense-card:hover
-{
-    box-shadow: 0 8px 16px rgb(250, 1, 1);
-
+.expense-card:hover {
+  box-shadow: 0 8px 16px rgb(250, 1, 1);
 }
 
-.transaction-card:hover
-{
-    box-shadow: 0 8px 16px rgb(1, 42, 250);
-
+.transaction-card:hover {
+  box-shadow: 0 8px 16px rgb(1, 42, 250);
 }
 
 
-.card-amount.income 
-{
+/* Styles for currency coloring */
+.card-amount.income {
   color: #2ecc71;
   font-size: large;
   font-weight: 600;
 }
 
-.card-amount.expense 
-{
+.card-amount.expense {
   color: #f50606;
   font-size: large;
   font-weight: 600;
 }
 
-.card li 
-{
+/* Transaction list item layout */
+.card li {
   display: flex;
-  font-weight: 700;
   justify-content: space-between;
+  font-weight: 700;
   padding: 0.2rem;
 }
 
+
 /* ================================
-   🧾 FORM SECTION i.e. Transaction form – Person C
-   Styles input fields and form layout
+   🧾 TRANSACTION FORM – Person C
+   Styles for the form used to add new transactions
 ================================== */
 .form-section {
   background-color: #fff;
@@ -136,16 +135,16 @@ body {
 }
 
 .form-section form {
-  display: flex; /* makes 'form' a flex container along with all direct children */
-  flex-wrap: wrap; /* allows wrapping into new rows when not enough horizontal space */
-  gap: 1rem;  /* the consistent spacing between fields */
-  justify-content: space-between; /* A flexbox property that puts the first field to far left and last field to the far right */
+  display: flex;            /* Make it a flexbox container */
+  flex-wrap: wrap;          /* Allows wrapping fields */
+  gap: 1rem;                /* Space between form fields */
+  justify-content: space-between;
 }
 
 .form-group {
-  flex: 1 1 48%; /* each takes nearly half of the row */
+  flex: 1 1 48%;            /* Allows each form group to take almost half width */
   display: flex;
-  flex-direction: column; /* stacks the label above the input i.e. a vertical layout inside each group instead of the default inline (horizontal) layout */
+  flex-direction: column;
 }
 
 .form-section label {
@@ -175,9 +174,21 @@ body {
   background-color: #0056b3;
 }
 
-/*Ensuring the button is aligned properly*/
 .form-group.button-group {
-  flex: 1 1 100%; /* widens the button field to the full length of row */
+  flex: 1 1 100%;            /* Make button span full row */
   display: flex;
-  justify-content: flex-end; /* aligns the button to right or end of container */
+  justify-content: flex-end; /* Align button to the right */
 }
+
+
+/* ================================
+   💡 LIGHTBOX / MODAL STYLES – Person C
+   Styles the overlay form popup
+================================== */
+/* TODO: Add styling for:
+   - .modal (full screen overlay)
+   - .modal-content (centered box)
+   - .close-button (X icon in top-right corner)
+*/
+
+
