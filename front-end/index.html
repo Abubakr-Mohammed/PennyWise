@@ -17,21 +17,22 @@
     </ul>
   </nav>
 
+  <!-- 🧱 MAIN GRID CONTAINER -->
   <main class="main-grid">
     
-    <!-- 🔲 INCOME SECTION (top-left) -->
+    <!-- 🔲 INCOME CARD -->
     <div class="card income-card">
       <h2>Income</h2>
       <span class="card-amount income">+$4,000.00</span>   
     </div>
 
-    <!-- 🔲 EXPENSE SECTION (top-left) -->
+    <!-- 🔲 EXPENSE CARD -->
     <div class="card expense-card">  
       <h2>Expenses</h2>
       <span class="card-amount expense">-$2,126.48</span> 
     </div>
 
-    <!-- 🧾 RECENT TRANSACTIONS (bottom-left) -->
+    <!-- 🧾 RECENT TRANSACTIONS CARD -->
     <div class="card transaction-card">
       <h2>Recent Transactions</h2>
       <ul>
@@ -44,13 +45,13 @@
       </ul>
     </div>
 
-    <!-- 💰 TOTAL BALANCE (bottom-left) -->
+    <!-- 💰 TOTAL BALANCE CARD -->
     <div class="card balance-card">
       <h2>Total Balance</h2>
       <span class="card-amount income">+$5,725.40</span>
     </div>
 
-    <!-- 👋 WELCOME SECTION (right side) -->
+    <!-- 👋 WELCOME CARD (right side) -->
     <div class="card welcome-card">
       <h2>Welcome to Pennywise</h2>
       <p>
@@ -61,16 +62,18 @@
         Use the "Add Transaction" button above to begin!
       </p>
     </div>
-    
+
   </main>
 
-  <!-- 🔲 TRANSACTION FORM MODEL -->
+  <!-- 🧾 TRANSACTION FORM MODAL (LIGHTBOX) -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <span class="close-button">&times;</span>
+
       <section id="transaction-form" class="form-section">
         <h2>Add New Transaction</h2>
         <form class="transaction-form">
+
           <div class="form-group">
             <label for="desc" class="form-label">Description:</label>
             <input type="text" id="desc" name="desc" class="form-input" placeholder="e.g., Grocery shopping" required />
@@ -97,11 +100,13 @@
           <div class="form-group button-group">
             <button type="submit" class="submit-button">Add Transaction</button>
           </div>
+
         </form>
       </section>
     </div>
   </div>
 
+  <!-- ✅ JS File linked as script (non-module) -->
   <script src="main.js"></script>
 </body>
 </html>

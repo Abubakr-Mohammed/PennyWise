@@ -1,159 +1,79 @@
 // ===============================
-// 📁 main.js – Pennywise
+// 📁 main.js – Pennywise (Template)
 // ===============================
-// This file handles user interactions, form submissions,
-// and server API calls for the Pennywise finance tracker.
-// Replace /api/transactions with your actual API endpoint.
+// This file handles:
+// 1. Modal interactions (open/close)
+// 2. Add Transaction form submission (Task A)
+// 3. Fetch/display all transactions (Task B)
+// 4. Delete transaction logic (Task C)
 
-// ========== ⚙️ Global DOM Elements ==========
-const model = document.getElementById("model");
+// ========== ⚙️ DOM Elements ==========
+const modal = document.getElementById("modal");
+const openFormBtn = document.getElementById("open-form");
 const closeBtn = document.querySelector(".close-button");
 const form = document.querySelector(".transaction-form");
 const transactionList = document.querySelector(".transaction-card ul");
 const totalBalanceEl = document.querySelector(".balance-card .card-amount");
 
-// ========== 🧠 Utility: Format currency with sign ==========
+// ========== 🧠 Utility: Format Currency ==========
 function formatCurrency(amount) {
   const prefix = amount >= 0 ? "+" : "-";
   return `${prefix}$${Math.abs(amount).toFixed(2)}`;
 }
 
-// ========== 🧠 Utility: Update Total Balance Color ==========
+// ========== 🧠 Utility: Update Total Balance ==========
 function updateTotalBalanceDisplay(balance) {
   totalBalanceEl.textContent = formatCurrency(balance);
   totalBalanceEl.classList.remove("income", "expense");
   totalBalanceEl.classList.add(balance >= 0 ? "income" : "expense");
 }
 
-// ========== ✅ model / Lightbox Logic ==========
-document.querySelectorAll("a").forEach(link => {
-  if (link.textContent.trim() === "Add Transaction") {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      model.style.display = "flex";
-    });
-  }
+// ========== 💡 Modal Lightbox Toggle ==========
+openFormBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  modal.style.display = "flex";
 });
 
 closeBtn.addEventListener("click", () => {
-  model.style.display = "none";
+  modal.style.display = "none";
 });
 
 window.addEventListener("click", (e) => {
-  if (e.target === model) {
-    model.style.display = "none";
+  if (e.target === modal) {
+    modal.style.display = "none";
   }
 });
 
-// ========== ✅ Task A: Handle the Add Transaction Form Submission ==========
+// ========== ✅ Task A: Handle Add Transaction ==========
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // 🔢 Extract form values
-  const desc = document.getElementById("desc").value;
-  const type = document.getElementById("type").value;
-  const rawAmount = parseFloat(document.getElementById("amount").value);
-  const date = document.getElementById("date").value;
+  // TODO: Extract values from form
+  // TODO: Adjust amount sign based on income/expense
+  // TODO: Send data to backend using fetch POST
+  // TODO: Optionally update the UI or reload transactions
 
-  // ➕ Make amount always positive then adjust sign by type
-  const amount = type === "expense" ? -Math.abs(rawAmount) : Math.abs(rawAmount);
-
-  const transactionData = {
-    description: desc,
-    type,
-    amount,
-    date
-  };
-
-  // ✅ TODO: Use fetch() to POST this data to your backend
-  // Example (uncomment and replace URL):
-  /*
-  try {
-    const response = await fetch('/api/transactions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(transactionData),
-    });
-
-    const result = await response.json();
-    // Optionally re-fetch all transactions or append it to DOM manually
-
-  } catch (error) {
-    console.error('Error adding transaction:', error);
-  }
-  */
-
-  // 🔄 Clear form & close model
   form.reset();
-  model.style.display = "none";
-
-  // ✅ Optional: Re-fetch transactions or update DOM directly
+  modal.style.display = "none";
 });
 
-// ========== ✅ Task B: Fetch and Display All Transactions ==========
+// ========== ✅ Task B: Load Transactions from API ==========
 async function loadTransactions() {
-  // ✅ TODO: Use fetch() to GET all transactions from your backend
-  // Example placeholder:
-  /*
-  try {
-    const response = await fetch('/api/transactions');
-    const transactions = await response.json();
-
-    // Clear existing list
-    transactionList.innerHTML = "";
-
-    // Loop and render each transaction
-    transactions.forEach(tx => {
-      const li = document.createElement("li");
-      const span = document.createElement("span");
-
-      span.textContent = formatCurrency(tx.amount);
-      span.classList.add("card-amount", tx.amount >= 0 ? "income" : "expense");
-
-      li.textContent = tx.description;
-      li.appendChild(span);
-
-      // ✅ TODO: Add a delete button/icon with event listener
-      // Call deleteTransaction(tx.id) when clicked
-
-      transactionList.appendChild(li);
-    });
-
-    // ✅ TODO: Optionally update balance total
-    // updateTotalBalanceDisplay(computedBalance);
-
-  } catch (err) {
-    console.error("Error loading transactions:", err);
-  }
-  */
+  // TODO: Use fetch() to get transactions from backend
+  // TODO: Clear existing list
+  // TODO: Loop through and append transactions
+  // TODO: Update total balance based on fetched data
 }
 
-// ========== ✅ Task C: Delete Transaction Feature ==========
+// ========== ✅ Task C: Delete Transaction ==========
 async function deleteTransaction(transactionId) {
-  // ✅ TODO: Use fetch() to DELETE the transaction by ID
-  /*
-  try {
-    await fetch(`/api/transactions/${transactionId}`, {
-      method: 'DELETE',
-    });
-
-    // Optionally re-fetch or remove the deleted item from DOM
-    loadTransactions();
-
-  } catch (err) {
-    console.error("Error deleting transaction:", err);
-  }
-  */
+  // TODO: Send DELETE request to API
+  // TODO: Refresh list or remove item from DOM
 }
 
-// ========== 🚀 INIT ==========
+// ========== 🚀 On Page Load ==========
 window.addEventListener("DOMContentLoaded", () => {
-  // Format starting balance on page load
-  const current = parseFloat(totalBalanceEl.textContent.replace(/[+$,]/g, ""));
-  updateTotalBalanceDisplay(current);
-
-  // ✅ Load transactions from backend
-  loadTransactions();
+  const initial = parseFloat(totalBalanceEl.textContent.replace(/[+$,]/g, ""));
+  updateTotalBalanceDisplay(initial);
+  loadTransactions(); // Load data from backend
 });

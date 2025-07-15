@@ -49,12 +49,21 @@ body {
 
 /* ================================
    🧱 MAIN GRID LAYOUT – Person B
-   Add layout grid for positioning:
-   Income / Expense top-left
-   Recent Tx / Balance bottom-left
-   Welcome panel on the right
+   Layout for left-side and right-side sections
 ================================== */
-/* TODO: Add .main-grid display: grid; with appropriate template-columns and grid-area styles */
+.main-grid {
+  display: grid;
+
+  /* TODO: Adjust the number of columns to fit your layout */
+  grid-template-columns: 2fr 1fr;
+
+  /* TODO: Create a grid template with rows to stack the income/expense above balance/transactions */
+  grid-template-rows: repeat(2, auto);
+
+  gap: 1.5rem;
+}
+
+/* TODO: Use grid-column/grid-row for exact positioning if needed */
 
 
 /* ================================
@@ -80,7 +89,7 @@ body {
   cursor: pointer;
 }
 
-/* Optional hover styles for specific cards */
+/* Optional hover styles */
 .income-card:hover,
 .balance-card:hover {
   box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
@@ -119,7 +128,7 @@ body {
 
 /* ================================
    🧾 TRANSACTION FORM – Person C
-   Styles for the form used to add new transactions
+   Styles for the Add Transaction form
 ================================== */
 .form-section {
   background-color: #fff;
@@ -135,14 +144,14 @@ body {
 }
 
 .form-section form {
-  display: flex;            /* Make it a flexbox container */
-  flex-wrap: wrap;          /* Allows wrapping fields */
-  gap: 1rem;                /* Space between form fields */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: space-between;
 }
 
 .form-group {
-  flex: 1 1 48%;            /* Allows each form group to take almost half width */
+  flex: 1 1 48%;
   display: flex;
   flex-direction: column;
 }
@@ -175,20 +184,60 @@ body {
 }
 
 .form-group.button-group {
-  flex: 1 1 100%;            /* Make button span full row */
+  flex: 1 1 100%;
   display: flex;
-  justify-content: flex-end; /* Align button to the right */
+  justify-content: flex-end;
 }
 
 
 /* ================================
    💡 LIGHTBOX / MODAL STYLES – Person C
-   Styles the overlay form popup
+   Popup modal triggered by Add Transaction
 ================================== */
-/* TODO: Add styling for:
-   - .modal (full screen overlay)
-   - .modal-content (centered box)
-   - .close-button (X icon in top-right corner)
+
+/* TODO: Style the full-screen dark overlay */
+.modal {
+  display: none; /* Change to flex with JS when shown */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+/* TODO: Style the centered modal content */
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+/* TODO: Style the X close button */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Optional: Add open/close animation if desired */
+/*
+.modal-content {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 */
-
-
