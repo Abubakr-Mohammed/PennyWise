@@ -1,6 +1,5 @@
 /* ================================
    🌐 BASE STYLING – Person A
-   General setup applied to all elements
 ================================== */
 * {
   margin: 0;
@@ -15,10 +14,8 @@ body {
   padding: 20px;
 }
 
-
 /* ================================
    🧭 NAVIGATION BAR – Shared
-   Styles the header navigation at the top
 ================================== */
 .navbar {
   display: flex;
@@ -46,35 +43,49 @@ body {
   text-decoration: none;
 }
 
-
 /* ================================
    🧱 MAIN GRID LAYOUT – Person B
-   Layout for left-side and right-side sections
 ================================== */
 .main-grid {
   display: grid;
-
-  /* TODO: Adjust the number of columns to fit your layout */
   grid-template-columns: 2fr 1fr;
-
-  /* TODO: Create a grid template with rows to stack the income/expense above balance/transactions */
-  grid-template-rows: repeat(2, auto);
-
+  grid-template-rows: auto auto;
   gap: 1.5rem;
 }
 
-/* TODO: Use grid-column/grid-row for exact positioning if needed */
+/* Positioning specific cards if needed */
+.income-card {
+  grid-column: 1;
+  grid-row: 1;
+}
 
+.expense-card {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.transaction-card {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.balance-card {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.welcome-card {
+  grid-column: span 2;
+}
 
 /* ================================
    📊 DASHBOARD CARDS – Person B
-   Individual card styles like Income, Expense, Balance, Transactions
 ================================== */
 .card {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 8px;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .card h2 {
@@ -82,6 +93,8 @@ body {
   font-weight: 600;
   color: #343a40;
   border-bottom: 2px solid #000;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .card:hover {
@@ -89,22 +102,19 @@ body {
   cursor: pointer;
 }
 
-/* Optional hover styles */
 .income-card:hover,
 .balance-card:hover {
-  box-shadow: 0 8px 16px rgba(1, 250, 9, 0.993);
+  box-shadow: 0 8px 16px rgba(1, 250, 9, 0.6);
 }
 
 .expense-card:hover {
-  box-shadow: 0 8px 16px rgb(250, 1, 1);
+  box-shadow: 0 8px 16px rgba(250, 1, 1, 0.6);
 }
 
 .transaction-card:hover {
-  box-shadow: 0 8px 16px rgb(1, 42, 250);
+  box-shadow: 0 8px 16px rgba(1, 42, 250, 0.6);
 }
 
-
-/* Styles for currency coloring */
 .card-amount.income {
   color: #2ecc71;
   font-size: large;
@@ -117,18 +127,16 @@ body {
   font-weight: 600;
 }
 
-/* Transaction list item layout */
 .card li {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  padding: 0.2rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #eee;
 }
-
 
 /* ================================
    🧾 TRANSACTION FORM – Person C
-   Styles for the Add Transaction form
 ================================== */
 .form-section {
   background-color: #fff;
@@ -189,15 +197,11 @@ body {
   justify-content: flex-end;
 }
 
-
 /* ================================
    💡 LIGHTBOX / MODAL STYLES – Person C
-   Popup modal triggered by Add Transaction
 ================================== */
-
-/* TODO: Style the full-screen dark overlay */
 .modal {
-  display: none; /* Change to flex with JS when shown */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -209,7 +213,6 @@ body {
   z-index: 999;
 }
 
-/* TODO: Style the centered modal content */
 .modal-content {
   background-color: #fff;
   padding: 2rem;
@@ -217,9 +220,9 @@ body {
   width: 90%;
   max-width: 600px;
   position: relative;
+  animation: fadeIn 0.3s ease-in;
 }
 
-/* TODO: Style the X close button */
 .close-button {
   position: absolute;
   top: 1rem;
@@ -230,14 +233,13 @@ body {
   cursor: pointer;
 }
 
-/* Optional: Add open/close animation if desired */
-/*
-.modal-content {
-  animation: fadeIn 0.3s ease-in;
-}
-
 @keyframes fadeIn {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
-*/
