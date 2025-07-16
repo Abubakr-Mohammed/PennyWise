@@ -59,10 +59,33 @@ form.addEventListener("submit", async (e) => {
 
 // ========== ✅ Task B: Load Transactions from API ==========
 async function loadTransactions() {
-  // TODO: Use fetch() to get transactions from backend
-  // TODO: Clear existing list
-  // TODO: Loop through and append transactions
-  // TODO: Update total balance based on fetched data
+  try {
+    const res = await fetch("http://localhost:3000/transactions");
+    const data = await res.json();
+
+    // Clear old transactions
+    transactionList.innerHTML = "";
+
+    let total = 0;
+
+    data.forEach((txn) => {
+      total += txn.amount;
+
+      const li = document.createElement("li");
+      li.innerHTML = `
+        ${txn.desc}
+        <span class="card-amount ${txn.amount >= 0 ? "income" : "expense"}">
+          ${formatCurrency(txn.amount)}
+        </span>
+      `;
+
+      transactionList.appendChild(li);
+    });
+
+    updateTotalBalanceDisplay(total);
+  } catch (error) {
+    console.error("Failed to load transactions:", error);
+  }
 }
 
 // ========== ✅ Task C: Delete Transaction ==========
