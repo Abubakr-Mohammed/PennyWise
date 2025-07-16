@@ -48,9 +48,10 @@ body {
 ================================== */
 .main-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, minmax(300px, 1fr));
+  gap: 2rem;
+  min-height: 70vh;
 }
 
 /* Positioning specific cards if needed */
@@ -75,7 +76,49 @@ body {
 }
 
 .welcome-card {
-  grid-column: span 2;
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.welcome-card .smiley {
+  font-size: 4.5rem;
+  width: auto;
+  height: auto;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-card .welcome-message {
+  font-size: 1.15rem;
+  text-align: center;
+  margin-top: 1.2rem;
+  color: #222;
+  line-height: 1.6;
+}
+
+.welcome-card .line-group .line {
+  display: block;
+  width: 120px;
+  height: 2px;
+  background-color: #000;
+  margin: 0.8rem 0;
+}
+
+.welcome-card h2 {
+  font-size: 1.3rem;
+  border-bottom: none;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* ================================
@@ -86,15 +129,38 @@ body {
   padding: 1.5rem;
   border-radius: 8px;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card h2 {
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: #343a40;
-  border-bottom: 2px solid #000;
-  padding-bottom: 0.5rem;
+  border-bottom: none;
   margin-bottom: 1rem;
+}
+
+.card li {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.card-amount.income {
+  color: #2ecc71;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card-amount.expense {
+  color: #f50606;
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .card:hover {
@@ -117,21 +183,22 @@ body {
 
 .card-amount.income {
   color: #2ecc71;
-  font-size: large;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .card-amount.expense {
   color: #f50606;
-  font-size: large;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .card li {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  padding: 0.4rem 0;
+  font-size: 1.2rem;
+  padding: 0.7rem 0;
   border-bottom: 1px solid #eee;
 }
 
