@@ -12,7 +12,7 @@ const modal = document.getElementById("modal");
 const openFormBtn = document.getElementById("open-form");
 const closeBtn = document.querySelector(".close-button");
 const form = document.querySelector(".transaction-form");
-const transactionList = document.querySelector(".transaction-card ul");
+const transactionList = document.getElementById("transactions-list");
 const totalBalanceEl = document.querySelector(".balance-card .card-amount");
 
 // ========== 🧠 Utility: Format Currency ==========
@@ -48,19 +48,56 @@ window.addEventListener("click", (e) => {
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // TODO: Extract values from form
-  // TODO: Adjust amount sign based on income/expense
-  // TODO: Send data to backend using fetch POST
-  // TODO: Optionally update the UI or reload transactions
+  // Extract values from form
+  
+  const desc = document.getElementById("desc").value;
+  const type = document.getElementById("type").value; // income or expense
+  const userAmount = parseFloat(document.getElementById("amount").value); // converts "amount" to a number
+  const date = document.getElementById("date").value;
+  // Adjust amount sign based on income/expense
+  const amount = type === "income" ? Math.abs(userAmount) : -Math.abs(userAmount);
 
+  const transactionData = 
+  {
+    description: desc,
+    type,
+    amount,
+    date,
+  };  
+
+  
+  //Send data to backend using fetch POST
+  try {
+    const res = await fetch("http://localhost:5000/transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(transactionData),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to add the recent transaction");
+    }
+
+    await loadTransactions();   // Refresh the transaction list after adding a new one
+  } catch (error) {
+    console.error("Error adding the recent transaction:", error);
+  }
+
+
+  // Reset form and close modal
   form.reset();
-  modal.style.display = "none";
+  modal.style.display = "none"; 
+
+  
+
 });
 
 // ========== ✅ Task B: Load Transactions from API ==========
 async function loadTransactions() {
   try {
-    const res = await fetch("http://localhost:3000/transactions");
+    const res = await fetch("http://localhost:5000/transactions");
     const data = await res.json();
 
     // Clear old transactions
@@ -90,8 +127,28 @@ async function loadTransactions() {
 
 // ========== ✅ Task C: Delete Transaction ==========
 async function deleteTransaction(transactionId) {
-  // TODO: Send DELETE request to API
-  // TODO: Refresh list or remove item from DOM
+  // Send DELETE request to API
+  try {
+    const res = await fetch(`http://localhost:5000/transactions/${transactionId}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete the recent transaction");
+    }
+
+    // Reload transactions after deletion
+    await loadTransactions();
+  } catch (error) {
+    console.error("Error deleting the transaction:", error);
+  }
+  // Refresh list or remove item from DOM
+  const transactionItem = document.querySelector(`li[data-id="${transactionId}"]`);
+  if (transactionItem) {
+    transactionItem.remove();
+  }
+
+
 }
 
 // ========== 🚀 On Page Load ==========
