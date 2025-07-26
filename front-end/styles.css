@@ -1,6 +1,5 @@
 /* ================================
-   🌐 BASE STYLING
-   Applies to all elements globally
+   🌐 BASE STYLING – Person A
 ================================== */
 * {
   margin: 0;
@@ -16,7 +15,7 @@ body {
 }
 
 /* ================================
-   🧭 NAVIGATION BAR
+   🧭 NAVIGATION BAR – Shared
 ================================== */
 .navbar {
   display: flex;
@@ -45,39 +44,166 @@ body {
 }
 
 /* ================================
-   📊 DASHBOARD SECTION – Person B
-   Layout for financial summaries
+   🧱 MAIN GRID LAYOUT – Person B
 ================================== */
-.dashboard {
+.main-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, minmax(300px, 1fr));
+  gap: 2rem;
+  min-height: 70vh;
 }
 
+/* Positioning specific cards if needed */
+.income-card {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.expense-card {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.transaction-card {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.balance-card {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.welcome-card {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.welcome-card .smiley {
+  font-size: 4.5rem;
+  width: auto;
+  height: auto;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-card .welcome-message {
+  font-size: 1.15rem;
+  text-align: center;
+  margin-top: 1.2rem;
+  color: #222;
+  line-height: 1.6;
+}
+
+.welcome-card .line-group .line {
+  display: block;
+  width: 120px;
+  height: 2px;
+  background-color: #000;
+  margin: 0.8rem 0;
+}
+
+.welcome-card h2 {
+  font-size: 1.3rem;
+  border-bottom: none;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ================================
+   📊 DASHBOARD CARDS – Person B
+================================== */
 .card {
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.card-amount.income {
-  color: #2ecc71;
-}
-
-.card-amount.expense {
-  color: #f50606;
+.card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #343a40;
+  border-bottom: none;
+  margin-bottom: 1rem;
 }
 
 .card li {
   display: flex;
   justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.card-amount.income {
+  color: #2ecc71;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card-amount.expense {
+  color: #f50606;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  cursor: pointer;
+}
+
+.income-card:hover,
+.balance-card:hover {
+  box-shadow: 0 8px 16px rgba(1, 250, 9, 0.6);
+}
+
+.expense-card:hover {
+  box-shadow: 0 8px 16px rgba(250, 1, 1, 0.6);
+}
+
+.transaction-card:hover {
+  box-shadow: 0 8px 16px rgba(1, 42, 250, 0.6);
+}
+
+.card-amount.income {
+  color: #2ecc71;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card-amount.expense {
+  color: #f50606;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card li {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #eee;
 }
 
 /* ================================
-   🧾 FORM SECTION – Person C
-   Styles input fields and form layout
+   🧾 TRANSACTION FORM – Person C
 ================================== */
 .form-section {
   background-color: #fff;
@@ -94,11 +220,15 @@ body {
 
 .form-section form {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-section label {
@@ -126,4 +256,57 @@ body {
 
 .form-section button:hover {
   background-color: #0056b3;
+}
+
+.form-group.button-group {
+  flex: 1 1 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ================================
+   💡 LIGHTBOX / MODAL STYLES – Person C
+================================== */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

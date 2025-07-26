@@ -46,12 +46,11 @@ back-end/
 ### Running the Development Server
 
 ```
-# Set Flask environment variables
-set FLASK_APP=app.py
-set FLASK_ENV=development
+#Make sure you db is initialized
+python init_db.py
 
 # Run the Flask development server
-flask run
+python app.py
 ```
 The API will be available at `http://localhost:5000`
 
@@ -64,9 +63,6 @@ The API will be available at `http://localhost:5000`
 Create a `.env` file in the back-end directory:
 
 ```
-FLASK_APP=app.py
-FLASK_ENV=development
-DATABASE_URL=sqlite:///pennywise.db
 SECRET_KEY=your-secret-key-here
 ```
 
@@ -94,6 +90,14 @@ The application uses SQLite by default. Database file will be created automatica
 - **Flask** - Web framework
 - **Flask-SQLAlchemy** - Database ORM integration
 - **SQLAlchemy** - Database ORM
+- **Werkzeug** - Password hashing and security utilities
+- **blinker** - Flask signal support
+- **click** - Command line utilities for Flask
+- **itsdangerous** - Secure data serialization for Flask
+- **Jinja2** - Templating engine for Flask
+- **MarkupSafe** - String escaping for Jinja2
+- **greenlet** - Lightweight in-process concurrent programming
+- **typing_extensions** - Backports for Python typing
 
 ## Author
 

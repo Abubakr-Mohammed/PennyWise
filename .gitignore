@@ -12,3 +12,6 @@ venv/
 
 # Python bytecode cache files
 __pycache__/
+back-end/__pycache__/
+
+*.md
