@@ -25,8 +25,30 @@ def create_transactions() :
 @transaction_bp.route('/transactions', methods=['GET'])
 def get_transactions():
     try:
-        transactions = Transaction.query.all()
-        requests = [t.to_dict() for t in transactions]
+        query = Transaction.query
+
+        id = request.args.get('id')
+        description = request.args.get('description')
+        amount = request.args.get('amount')
+        type = request.args.get('type')
+        date = request.args.get('date')
+        user_id = request.args.get('user_id')
+
+        if id:
+            query = query.filter_by(id=id)
+        if description:
+            query = query.filter_by(description=description)
+        if amount:
+            query = query.filter_by(amount=amount)
+        if type:
+            query = query.filter_by(type=type)
+        if date:
+            query = query.filter_by(date=date)
+        if user_id:
+            query = query.filter_by(user_id=user_id)
+
+        transactions = query.all()
+        requests = [t.to_dict() for t in query]
         return jsonify({"message": "Retrieved Transactions", "data": requests}), 200
 
     except Exception as e:
