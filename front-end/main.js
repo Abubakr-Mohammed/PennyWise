@@ -15,6 +15,20 @@ const form = document.querySelector(".transaction-form");
 const transactionList = document.getElementById("transactions-list");
 const totalBalanceEl = document.querySelector(".balance-card .card-amount");
 
+// ========== 🛠️ Helper Function: Reusable UI message handler to avoid repeating code ==========
+const messageBox = document.getElementById("message-box");
+
+function showMessage(msg, type = "success", duration = 3000) {
+  messageBox.textContent = msg; // the box content should be the message
+  messageBox.className = `message-box ${type}`; // the accompanying type chooses which CSS style to use, success is just the default value
+  messageBox.style.display = "block";
+  if (type != "loading") {
+    setTimeout(() => {
+      messageBox.style.display = "none";
+    }, duration);
+  }
+}
+
 // ========== 🧠 Utility: Format Currency ==========
 function formatCurrency(amount) {
   const prefix = amount >= 0 ? "+" : "-";
@@ -47,6 +61,7 @@ window.addEventListener("click", (e) => {
 // ========== ✅ Task A: Handle Add Transaction ==========
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  showMessage("Submitting transaction...", "loading");
 
   // Extract values from form
   
@@ -81,8 +96,9 @@ form.addEventListener("submit", async (e) => {
     }
 
     await loadTransactions();   // Refresh the transaction list after adding a new one
+    showMessage("Transaction added successfully!", "success");
   } catch (error) {
-    console.error("Error adding the recent transaction:", error);
+    showMessage("Something went wrong while adding transaction.", "error");
   }
 
 
@@ -96,6 +112,7 @@ form.addEventListener("submit", async (e) => {
 
 // ========== ✅ Task B: Load Transactions from API ==========
 async function loadTransactions() {
+  showMessage("Loading transactions...", "loading");
   try {
     const res = await fetch("http://localhost:5000/transactions");
     const data = await res.json();
@@ -120,8 +137,9 @@ async function loadTransactions() {
     });
 
     updateTotalBalanceDisplay(total);
+    messageBox.style.display = "none";
   } catch (error) {
-    console.error("Failed to load transactions:", error);
+    showMessage("Failed to load transactions.", "error");
   }
 }
 
