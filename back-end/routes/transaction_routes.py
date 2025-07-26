@@ -47,7 +47,6 @@ def get_transactions():
         if user_id:
             query = query.filter_by(user_id=user_id)
 
-        transactions = query.all()
         requests = [t.to_dict() for t in query]
         return jsonify({"message": "Retrieved Transactions", "data": requests}), 200
 
