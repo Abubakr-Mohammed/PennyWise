@@ -1,4 +1,4 @@
-from app import app, db  # Make sure you're importing app here too!
+from app import app, db
 from models.user_model import User
 from models.transaction_model import Transaction
 
