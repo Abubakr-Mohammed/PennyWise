@@ -14,6 +14,9 @@ const closeBtn = document.querySelector(".close-button");
 const form = document.querySelector(".transaction-form");
 const transactionList = document.getElementById("transactions-list");
 const totalBalanceEl = document.querySelector(".balance-card .card-amount");
+const incomeCardEl = document.querySelector(".income-card .card-amount");
+const expenseCardEl = document.querySelector(".expense-card .card-amount");
+
 
 // ========== 🛠️ Helper Function: Reusable UI message handler to avoid repeating code ==========
 const messageBox = document.getElementById("message-box");
@@ -28,6 +31,18 @@ function showMessage(msg, type = "success", duration = 3000) {
     }, duration);
   }
 }
+
+// ========== 🛠️ Helper Function: To update the Expense and Income display ==========
+function updateIncomeExpenseDisplay(income, expenses) {
+  incomeCardEl.textContent = formatCurrency(income);
+  incomeCardEl.classList.remove("expense"); // Reset previous style, then apply correct class (applies the right style) to the Income card
+  incomeCardEl.classList.add("income");
+
+  expenseCardEl.textContent = formatCurrency(expenses);
+  expenseCardEl.classList.remove("income"); // Same concept applies to expense card as income card
+  expenseCardEl.classList.add("expense");
+}
+
 
 // ========== 🧠 Utility: Format Currency ==========
 function formatCurrency(amount) {
@@ -121,9 +136,17 @@ async function loadTransactions() {
     transactionList.innerHTML = "";
 
     let total = 0;
+    let totalIncome = 0;
+    let totalExpenses = 0;
 
     data.forEach((txn) => {
       total += txn.amount;
+
+      if (txn.amount >= 0){
+        totalIncome += txn.amount;
+      } else {
+        totalExpenses += txn.amount;
+      }
 
       const li = document.createElement("li");
       li.innerHTML = `
@@ -137,6 +160,8 @@ async function loadTransactions() {
     });
 
     updateTotalBalanceDisplay(total);
+    updateIncomeExpenseDisplay(totalIncome, totalExpenses);
+
     messageBox.style.display = "none";
   } catch (error) {
     showMessage("Failed to load transactions.", "error");
