@@ -13,7 +13,7 @@ def create_transactions():
     required_fields = ['description', 'amount', 'type', 'user_id']
     for field in required_fields:
         if field not in data:
-            return jsonify({"error": f"Missing field: {field}"}), 400
+            return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
 
     try:
         amount = float(data['amount'])
@@ -24,10 +24,10 @@ def create_transactions():
         elif data['type'] == 'income':
             amount = abs(amount)   # ensures it's always positive
         else:
-            return jsonify({"error": "Type must be 'income' or 'expense'"}), 400
+            return jsonify({"status": "error", "message": "Type must be 'income' or 'expense'"}), 400
 
     except (ValueError, TypeError):
-        return jsonify({"error": "Amount must be a valid number"}), 400
+        return jsonify({"status": "error", "message": "Amount must be a valid number"}), 400
 
     try:
         new_transaction = Transaction(
@@ -41,24 +41,48 @@ def create_transactions():
         db.session.add(new_transaction)
         db.session.commit()
 
-        return jsonify({"message": "Transaction created successfully"}), 201
+        return jsonify({"status": "success", "message": "Transaction created successfully"}), 201
 
-    except Exception as e:
-        print("❌ Error in POST /transactions:", e)
+    except Exception:
         db.session.rollback()
-        return jsonify({"error": "Database error occurred"}), 500
+        return jsonify({"status": "error", "message": "Server error occurred"}), 500
 
 # Route: POST /api/transactions
 # Description: Gets and displays transaction from database
 @transaction_bp.route('/transactions', methods=['GET'])
 def get_transactions():
     try:
-        transactions = Transaction.query.all()
+        transactions = Transaction.query
+
+        id = request.args.get('id')
+        description = request.args.get('description')
+        amount = request.args.get('amount')
+        type = request.args.get('type')
+        date = request.args.get('date')
+        user_id = request.args.get('user_id')
+
+        if id:
+            transactions = transactions.filter_by(id=id)
+
+        if description:
+            transactions = transactions.filter_by(description=description)
+
+        if amount:
+            transactions = transactions.filter_by(amount=amount)
+
+        if type:
+            transactions = transactions.filter_by(type=type)
+
+        if date:
+            transactions = transactions.filter_by(date=date)
+
+        if user_id:
+            transactions = transactions.filter_by(user_id=user_id)
+
         result = [t.to_dict() for t in transactions]
-        return jsonify(result), 200
-    except Exception as e:
-        print("❌ Error in GET /transactions:", e) 
-        return jsonify({"error": "Failed to retrieve transactions"}), 500
+        return jsonify({"status": "success", "message": "Retrieved Transactions", "data": result}), 200
+    except Exception:
+        return jsonify({"status": "error", "message": "Failed to retrieve transactions"}), 500
 
 @transaction_bp.route('/balance/<int:user_id>', methods=['GET'])
 def get_user_balance(user_id):
@@ -70,13 +94,14 @@ def get_user_balance(user_id):
         balance = sum(t.amount for t in transactions)
 
         return jsonify({
+            "status": "success",
+            "message": "Balance retrieved",
             "user_id": user_id,
             "balance": round(balance, 2)
         }), 200
 
-    except Exception as e:
-        print("❌ Error in GET /balance/<user_id>:", e)
-        return jsonify({"error": "Failed to retrieve balance"}), 500
+    except Exception:
+        return jsonify({"status": "error", "message": "Failed to retrieve balance"}), 500
 
 # Route: DELETE /api/transactions
 # Description: Deletes transaction from database
@@ -86,16 +111,15 @@ def delete_transaction(id):
         transaction = Transaction.query.get(id)
 
         if not transaction:
-            return jsonify({"error": "Transaction not found"}), 404
+            return jsonify({"status": "error", "message": "Transaction not found"}), 404
 
         db.session.delete(transaction)
         db.session.commit()
-        return jsonify({"message": "Transaction deleted successfully"}), 200
+        return jsonify({"status": "success", "message": "Transaction deleted successfully"}), 200
 
-    except Exception as e:
-        print("❌ Error in DELETE /transactions:", e)
+    except Exception:
         db.session.rollback()
-        return jsonify({"error": "Failed to delete transaction"}), 500
+        return jsonify({"status": "error", "message": "Failed to delete transaction"}), 500
 
 @transaction_bp.route('/transactions/<int:id>', methods=['GET'])
 def get_transaction_by_id(id):
@@ -103,10 +127,9 @@ def get_transaction_by_id(id):
         transaction = Transaction.query.get(id)
         
         if not transaction:
-            return jsonify({"error": "Transaction not found"}), 404
+            return jsonify({"status": "error", "message": "Transaction not found"}), 404
 
-        return jsonify(transaction.to_dict()), 200
+        return jsonify({"status": "success", "message": "Transaction Retrieved", "data": transaction.to_dict()}), 200
 
-    except Exception as e:
-        print("❌ Error in GET /transactions/<id>:", e)
-        return jsonify({"error": "Failed to retrieve transaction"}), 500
+    except Exception:
+        return jsonify({"status": "error", "message": "Failed to retrieve transaction"}), 500
