@@ -32,12 +32,18 @@ viewBalanceBtn.addEventListener("click", async () => {
   try {
     const res = await fetch(`http://127.0.0.1:5000/api/balance/${USER_ID}`);
     const data = await res.json();
+    console.log("Balance API response:", data);  // 👈 DEBUG HERE
 
-    // Nicely format the JSON
-    balanceJsonOutput.textContent = JSON.stringify(data, null, 2);
+    if (data.status === "success" && typeof data.balance === "number") {
+    balanceJsonOutput.textContent = `Total Balance: $${data.balance.toFixed(2)}`;
+    } else {
+    balanceJsonOutput.textContent = "Failed to load balance.";
+    console.warn("Unexpected balance format:", data);  // 👈 DEBUG
+    }
+
   } catch (err) {
     balanceJsonOutput.textContent = "Error loading balance.";
-    console.error("Error fetching balance:", err);
+    console.error("Error fetching balance:", err); // 👈 DEBUG
   }
 
   // Show lightbox
@@ -148,7 +154,7 @@ async function loadTransactions() {
     showMessage("Loading transactions...", "loading");
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/transactions");
+        const res = await fetch("http://127.0.0.1:5000/api/transactions"); //error is here
         const data = await res.json();
 
         if (data.status === "success" && Array.isArray(data.data)) {
@@ -223,7 +229,7 @@ async function deleteTransaction(transactionId) {
 function initApp() {
     handleModalEvents();
     form.addEventListener("submit", addTransaction);
-    loadTransactions();
+    loadTransactions(); //error is here
 }
 
 // ========== 🔃 On Page Load ==========
