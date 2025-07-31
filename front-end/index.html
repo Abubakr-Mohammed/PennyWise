@@ -37,18 +37,25 @@
 
     <!-- 🧾 RECENT TRANSACTIONS CARD -->
     <div class="card transaction-card">
-  <h2>Recent Transactions</h2>
-  <ul id="transactions-list">
-    <!-- JavaScript will insert real transaction <li> elements here -->
-  </ul>
-</div>
-
-    <!-- 💰 TOTAL BALANCE CARD -->
-    <div class="card balance-card">
-      <h2>Total Balance</h2>
-      <span class="card-amount income">+$5,725.40</span>
+    <h2>Recent Transactions</h2>
+    <ul id="transactions-list">
+      <!-- JavaScript will insert real transaction <li> elements here -->
+    </ul>
     </div>
 
+    <!-- 💳 Total Balance Card -->
+    <div class="card balance-card">
+      <h3>Total Balance</h3>
+      <button id="view-balance-btn" class="view-btn">View Total Balance</button>
+    </div>
+
+    <!-- 👇 Lightbox Modal (hidden by default) -->
+    <div id="balance-lightbox" class="lightbox hidden">
+      <div class="lightbox-content">
+        <pre id="balance-json-output">Loading...</pre>
+        <button id="close-lightbox-btn">Close</button>
+      </div>
+    </div>
     <!-- 👋 WELCOME CARD (right side) -->
     <div class="card welcome-card">
       <div class="smiley">😊</div>

@@ -18,6 +18,35 @@ const totalBalanceEl = document.querySelector(".balance-card .card-amount");
 const incomeCardEl = document.querySelector(".income-card .card-amount");
 const expenseCardEl = document.querySelector(".expense-card .card-amount");
 const messageBox = document.getElementById("message-box");
+const viewBalanceBtn = document.getElementById("view-balance-btn");
+const lightbox = document.getElementById("balance-lightbox");
+const closeLightboxBtn = document.getElementById("close-lightbox-btn");
+const balanceJsonOutput = document.getElementById("balance-json-output");
+
+// ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
+const USER_ID = 1; // Replace with dynamic ID if logged-in user is known
+
+viewBalanceBtn.addEventListener("click", async () => {
+  balanceJsonOutput.textContent = "Loading...";
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5000/api/balance/${USER_ID}`);
+    const data = await res.json();
+
+    // Nicely format the JSON
+    balanceJsonOutput.textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    balanceJsonOutput.textContent = "Error loading balance.";
+    console.error("Error fetching balance:", err);
+  }
+
+  // Show lightbox
+  lightbox.classList.remove("hidden");
+});
+
+closeLightboxBtn.addEventListener("click", () => {
+  lightbox.classList.add("hidden");
+});
 
 // ========== 🧠 Utility: Format Currency ==========
 function formatCurrency(amount) {
@@ -52,7 +81,7 @@ function updateIncomeExpenseDisplay(income, expenses) {
     expenseCardEl.className = "card-amount expense";
 }
 
-// ========== 💡 Modal Interactions ==========
+// ========== 💡 Add Transaction Lightbox/Modal Interactions ==========
 function openModal() {
     modal.style.display = "flex";
 }
@@ -93,7 +122,7 @@ async function addTransaction(e) {
 
     const amount = type === "income" ? Math.abs(userAmount) : -Math.abs(userAmount);
 
-    const transactionData = { description: desc, type, amount, date };
+    const transactionData = { description: desc, type, amount, date, user_id: 1 };
 
     try {
         const res = await fetch("http://localhost:5000/api/transactions", {
@@ -115,19 +144,31 @@ async function addTransaction(e) {
 
 // ========== 📥 Load Transactions ==========
 async function loadTransactions() {
+    transactionList.innerHTML = `<li>Loading transactions...</li>`;
     showMessage("Loading transactions...", "loading");
 
     try {
-        const res = await fetch("http://localhost:5000/api/transactions");
+        const res = await fetch("http://127.0.0.1:5000/api/transactions");
         const data = await res.json();
 
-        renderTransactionList(data);
-        messageBox.style.display = "none";
+        if (data.status === "success" && Array.isArray(data.data)) {
+            if (data.data.length === 0) {
+                transactionList.innerHTML = `<li>No transactions yet. Add one to get started.</li>`;
+                showMessage("No transactions yet. Add one to get started!", "info");
+            } else {
+                renderTransactionList(data.data);
+                messageBox.style.display = "none";
+            }
+        } else {
+            showMessage("Unexpected response format.", "error");
+        }
     } catch (error) {
+        transactionList.innerHTML = `<li>Error loading transactions.</li>`;
         showMessage("Failed to load transactions.", "error");
     }
 }
 
+// ========== 🧾 Render All Transactions ==========
 function renderTransactionList(transactions) {
     transactionList.innerHTML = "";
 
@@ -145,18 +186,22 @@ function renderTransactionList(transactions) {
     updateIncomeExpenseDisplay(income, expenses);
 }
 
+// ========== 📄 Render Single Transaction ==========
 function renderTransactionItem(txn) {
     const li = document.createElement("li");
-    li.dataset.id = txn._id;
+    li.dataset.id = txn.id; // fixed from _id to id (based on the backend)
+
     li.innerHTML = `
-        ${txn.description}
+        <span>${txn.date} – ${txn.description}</span>
         <span class="card-amount ${txn.amount >= 0 ? "income" : "expense"}">
             ${formatCurrency(txn.amount)}
         </span>
-        <button class="delete-btn" onclick="deleteTransaction('${txn._id}')">🗑</button>
+        <button class="delete-btn" onclick="deleteTransaction(${txn.id})">🗑</button>
     `;
+
     transactionList.appendChild(li);
 }
+
 
 // ========== ❌ Delete Transaction ==========
 async function deleteTransaction(transactionId) {
