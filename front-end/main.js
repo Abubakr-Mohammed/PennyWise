@@ -27,31 +27,30 @@ const balanceJsonOutput = document.getElementById("balance-json-output");
 const USER_ID = 1; // Replace with dynamic ID if logged-in user is known
 
 viewBalanceBtn.addEventListener("click", async () => {
-  balanceJsonOutput.textContent = "Loading...";
+    balanceJsonOutput.textContent = "Loading...";
 
-  try {
-    const res = await fetch(`http://127.0.0.1:5000/api/balance/${USER_ID}`);
-    const data = await res.json();
-    console.log("Balance API response:", data);  // 👈 DEBUG HERE
+    try {
+        const res = await fetch(`http://127.0.0.1:5000/api/balance/${USER_ID}`);
+        const data = await res.json();
+        console.log("Balance API response:", data); // 👈 DEBUG HERE
 
-    if (data.status === "success" && typeof data.balance === "number") {
-    balanceJsonOutput.textContent = `Total Balance: $${data.balance.toFixed(2)}`;
-    } else {
-    balanceJsonOutput.textContent = "Failed to load balance.";
-    console.warn("Unexpected balance format:", data);  // 👈 DEBUG
+        if (data.status === "success" && typeof data.balance === "number") {
+            balanceJsonOutput.textContent = `Total Balance: $${data.balance.toFixed(2)}`;
+        } else {
+            balanceJsonOutput.textContent = "Failed to load balance.";
+            console.warn("Unexpected balance format:", data); // 👈 DEBUG
+        }
+    } catch (err) {
+        balanceJsonOutput.textContent = "Error loading balance.";
+        console.error("Error fetching balance:", err); // 👈 DEBUG
     }
 
-  } catch (err) {
-    balanceJsonOutput.textContent = "Error loading balance.";
-    console.error("Error fetching balance:", err); // 👈 DEBUG
-  }
-
-  // Show lightbox
-  lightbox.classList.remove("hidden");
+    // Show lightbox
+    lightbox.classList.remove("hidden");
 });
 
 closeLightboxBtn.addEventListener("click", () => {
-  lightbox.classList.add("hidden");
+    lightbox.classList.add("hidden");
 });
 
 // ========== 🧠 Utility: Format Currency ==========
@@ -71,12 +70,6 @@ function showMessage(msg, type = "success", duration = 3000) {
             messageBox.style.display = "none";
         }, duration);
     }
-}
-
-function updateTotalBalanceDisplay(balance) {
-    totalBalanceEl.textContent = formatCurrency(balance);
-    totalBalanceEl.classList.remove("income", "expense");
-    totalBalanceEl.classList.add(balance >= 0 ? "income" : "expense");
 }
 
 function updateIncomeExpenseDisplay(income, expenses) {
@@ -128,12 +121,12 @@ async function addTransaction(e) {
 
     const amount = type === "income" ? Math.abs(userAmount) : -Math.abs(userAmount);
 
-    const transactionData = { description: desc, type, amount, date, user_id: 1 };
+    const transactionData = {description: desc, type, amount, date, user_id: 1};
 
     try {
         const res = await fetch("http://localhost:5000/api/transactions", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify(transactionData),
         });
 
@@ -184,11 +177,10 @@ function renderTransactionList(transactions) {
 
     transactions.forEach((txn) => {
         total += txn.amount;
-        txn.amount >= 0 ? income += txn.amount : expenses += txn.amount;
+        txn.amount >= 0 ? (income += txn.amount) : (expenses += txn.amount);
         renderTransactionItem(txn);
     });
 
-    updateTotalBalanceDisplay(total);
     updateIncomeExpenseDisplay(income, expenses);
 }
 
@@ -207,7 +199,6 @@ function renderTransactionItem(txn) {
 
     transactionList.appendChild(li);
 }
-
 
 // ========== ❌ Delete Transaction ==========
 async function deleteTransaction(transactionId) {
