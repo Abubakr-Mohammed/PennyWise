@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register</title>
-  <link rel="stylesheet" href="login.css" />
+  <title>Register | PennyWise</title>
+  <link rel="stylesheet" href="register.css">
 </head>
 <body>
 
@@ -12,6 +12,16 @@
     <h2>Register</h2>
 
     <form id="register-form">
+      <div class="input-box">
+        <input type="text" id="first-name" required />
+        <label for="first-name">First Name</label>
+      </div>
+
+      <div class="input-box">
+        <input type="text" id="last-name" required />
+        <label for="last-name">Last Name</label>
+      </div>
+
       <div class="input-box">
         <input type="text" id="username" required />
         <label for="username">Username</label>
@@ -39,6 +49,7 @@
       </div>
     </form>
   </div>
+
   <script src="register.js"></script>
 </body>
 </html>

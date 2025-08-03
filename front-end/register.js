@@ -2,6 +2,8 @@
 document.getElementById("register-form").addEventListener("submit", async function (e) {
   e.preventDefault();
 
+  const firstName = document.getElementById("first-name").value.trim();
+  const lastName = document.getElementById("last-name").value.trim();
   const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
@@ -23,12 +25,12 @@ document.getElementById("register-form").addEventListener("submit", async functi
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username, email, password }),
+      body: JSON.stringify({ username, email, password, first_name: firstName, last_name: lastName }),
     });
 
     const result = await response.json();
 
-    if (response.ok && result.status === "User registered successfully") {
+    if (response.ok && result.message === "User registered successfully") {
       alert("Registration successful! Please log in.");
       window.location.href = "login.html";
     } else {

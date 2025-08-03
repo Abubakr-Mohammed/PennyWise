@@ -21,7 +21,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
 
     const result = await response.json();
 
-    if (response.ok && result.status === "Login successful") {
+    if (response.ok && result.message === "Login successful") {
       // Save user data in localStorage if needed
       localStorage.setItem("user_id", result.user_id);
       localStorage.setItem("username", result.username);
