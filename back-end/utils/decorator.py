@@ -10,9 +10,8 @@ def token_required(f):
             return jsonify({"status": "error", "message": "Token is missing"}), 401
 
         try:
-            # Extract token (user_id for now)
             token = auth_header.split(" ")[1]
-            user_id = int(token)  # In real apps, decode JWT instead
+            user_id = int(token) 
         except Exception:
             return jsonify({"status": "error", "message": "Invalid token"}), 401
 
