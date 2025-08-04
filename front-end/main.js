@@ -202,6 +202,9 @@ function renderTransactionItem(txn) {
 
 // ========== ❌ Delete Transaction ==========
 async function deleteTransaction(transactionId) {
+    const confirmDelete = confirm("Are you sure you want to delete this transaction?");
+    if (!confirmDelete) return;
+
     try {
         const res = await fetch(`http://localhost:5000/api/transactions/${transactionId}`, {
             method: "DELETE",
@@ -209,13 +212,13 @@ async function deleteTransaction(transactionId) {
 
         if (!res.ok) throw new Error("Failed to delete transaction");
 
+        showMessage("Transaction deleted successfully!", "success");
         await loadTransactions();
     } catch (error) {
         console.error("Error deleting transaction:", error);
         showMessage("Failed to delete transaction.", "error");
     }
 }
-
 // ========== 🚀 Initialize ==========
 function initApp() {
     handleModalEvents();
