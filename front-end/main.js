@@ -14,7 +14,6 @@ const openFormBtn = document.getElementById("open-form");
 const closeBtn = document.querySelector(".close-button");
 const form = document.querySelector(".transaction-form");
 const transactionList = document.getElementById("transactions-list");
-const totalBalanceEl = document.querySelector(".balance-card .card-amount");
 const incomeCardEl = document.querySelector(".income-card .card-amount");
 const expenseCardEl = document.querySelector(".expense-card .card-amount");
 const messageBox = document.getElementById("message-box");
@@ -22,6 +21,7 @@ const viewBalanceBtn = document.getElementById("view-balance-btn");
 const lightbox = document.getElementById("balance-lightbox");
 const closeLightboxBtn = document.getElementById("close-lightbox-btn");
 const balanceJsonOutput = document.getElementById("balance-json-output");
+const logoutBtn = document.getElementById("logout-btn");
 
 // ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
 const USER_ID = 1; // Replace with dynamic ID if logged-in user is known
@@ -147,7 +147,7 @@ async function loadTransactions() {
     showMessage("Loading transactions...", "loading");
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/transactions"); //error is here
+        const res = await fetch("http://127.0.0.1:5000/api/transactions");
         const data = await res.json();
 
         if (data.status === "success" && Array.isArray(data.data)) {
@@ -219,11 +219,19 @@ async function deleteTransaction(transactionId) {
         showMessage("Failed to delete transaction.", "error");
     }
 }
+
+// ========== Logout button ==========
+logoutBtn.addEventListener("click", () => {
+  // Optional: Clear user session info (if using localStorage, cookies, etc.)
+  // localStorage.clear();
+  window.location.href = "login.html"; // adjust if different filename
+});
+
 // ========== 🚀 Initialize ==========
 function initApp() {
     handleModalEvents();
     form.addEventListener("submit", addTransaction);
-    loadTransactions(); //error is here
+    loadTransactions();
 }
 
 // ========== 🔃 On Page Load ==========
