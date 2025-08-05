@@ -13,11 +13,11 @@ def token_required(f):
 
         try:
             token = auth_header.split(" ")[1]
-            payload = jwt.decode(token, current_app.environ['SECRET_KEY'], algorithms=["HS256"])
+            payload = jwt.decode(token, current_app.config['SECRET_KEY'], algorithms=["HS256"])
             user_id = payload.get('user_id')
         except Exception:
             return jsonify({"status": "error", "message": "Invalid token"}), 401
 
-        return f(user_id=user_id, *args, **kwargs)
+        return f(authenticated_user_id=user_id, *args, **kwargs)
 
     return decorated

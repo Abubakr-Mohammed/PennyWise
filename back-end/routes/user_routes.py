@@ -8,7 +8,7 @@ user_bp = Blueprint('user', __name__)
 @token_required
 def get_user_profile(user_id, **kwargs):
     # Get the authenticated user's ID from the token
-    authenticated_user_id = kwargs.get('user_id')
+    authenticated_user_id = kwargs.get('authenticated_user_id')
     
     # Only allow users to access their own profile
     if authenticated_user_id != user_id:
