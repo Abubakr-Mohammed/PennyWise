@@ -1,5 +1,7 @@
 from functools import wraps
-from flask import request, jsonify
+from flask import request, jsonify, current_app
+import jwt
+
 
 def token_required(f):
     @wraps(f)
@@ -11,7 +13,8 @@ def token_required(f):
 
         try:
             token = auth_header.split(" ")[1]
-            user_id = int(token) 
+            payload = jwt.decode(token, current_app.environ['SECRET_KEY'], algorithms=["HS256"])
+            user_id = payload.get('user_id')
         except Exception:
             return jsonify({"status": "error", "message": "Invalid token"}), 401
 
