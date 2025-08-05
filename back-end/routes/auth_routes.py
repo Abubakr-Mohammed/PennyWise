@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta, timezone
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, current_app
 from models.user_model import User
 from extensions import db, bcrypt
-import jwt
+import jwt, os
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -58,7 +58,7 @@ def login():
         "exp": int((datetime.now(timezone.utc) + timedelta(hours=1)).timestamp())
     }
 
-    secret = "123456" #TODO: Change this value for production.
+    secret = current_app.environ['SECRET_KEY']
     token = jwt.encode(payload, secret, algorithm="HS256")
 
     return jsonify({"status": "success", "message": "Login successful", "token": token}), 200
