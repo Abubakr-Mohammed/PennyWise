@@ -1,6 +1,8 @@
+from datetime import datetime, timedelta, timezone
 from flask import Blueprint, request, jsonify
 from models.user_model import User
 from extensions import db, bcrypt
+import jwt
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -48,6 +50,15 @@ def login():
 
     user = User.query.filter_by(username=data.get('username')).first()
     if not user or not bcrypt.check_password_hash(user.password, data.get('password')):
-        return jsonify({"error": "Invalid credentials"}), 401
+        return jsonify({"status": "error", "message": "Invalid credentials"}), 401
 
-    return jsonify({"message": "Login successful", "user_id": user.id, "username": user.username, "first_name": user.first_name, "last_name": user.last_name}), 200
+    payload = {
+        "user_id": user.id,
+        "username": user.username,
+        "exp": int((datetime.now(timezone.utc) + timedelta(hours=1)).timestamp())
+    }
+
+    secret = "123456" #TODO: Change this value for production.
+    token = jwt.encode(payload, secret, algorithm="HS256")
+
+    return jsonify({"status": "success", "message": "Login successful", "token": token}), 200
