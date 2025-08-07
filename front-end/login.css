@@ -1,5 +1,6 @@
-/* login.css */
-
+/* ================================
+   🔐 LOGIN.CSS – Wealthy Green Theme
+================================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #E6F4EA; /* Mint/Pale Green */
+  background: #ecfdf5; /* Updated mint green */
 }
 
 .wrapper {
@@ -27,14 +28,14 @@ body {
   font-size: 28px;
   font-weight: 600;
   text-align: center;
-  color: #234F1E; /* Forest Green */
+  color: #14532d; /* Wealthy green heading */
 }
 
 .wrapper .input-box {
   position: relative;
   width: 100%;
   margin: 30px 0;
-  border-bottom: 2px solid #4A6E57; /* Dark Sage */
+  border-bottom: 2px solid #15803d; /* Accent border */
 }
 
 .input-box input {
@@ -43,7 +44,7 @@ body {
   border: none;
   background: transparent;
   font-size: 16px;
-  color: #234F1E;
+  color: #064e3b; /* Input text: dark forest green */
   outline: none;
 }
 
@@ -51,7 +52,7 @@ body {
   position: absolute;
   top: 50%;
   left: 5px;
-  color: #4A6E57;
+  color: #15803d;
   transform: translateY(-50%);
   pointer-events: none;
   transition: 0.3s ease;
@@ -61,7 +62,7 @@ body {
 .input-box input:valid ~ label {
   top: -5px;
   font-size: 12px;
-  color: #2E8B57; /* Emerald */
+  color: #22c55e; /* Emerald green highlight */
 }
 
 .remember-forgot {
@@ -69,11 +70,11 @@ body {
   justify-content: space-between;
   font-size: 14px;
   margin: -10px 0 20px;
-  color: #4A6E57;
+  color: #15803d;
 }
 
 .remember-forgot a {
-  color: #2E8B57;
+  color: #22c55e;
   text-decoration: none;
 }
 
@@ -84,7 +85,7 @@ body {
 .btn {
   width: 100%;
   height: 45px;
-  background: #234F1E;
+  background: #14532d; /* Deep wealthy green */
   border: none;
   outline: none;
   border-radius: 6px;
@@ -95,18 +96,18 @@ body {
 }
 
 .btn:hover {
-  background: #2E8B57;
+  background: #15803d; /* Emerald hover */
 }
 
 .register-link {
   font-size: 14px;
   text-align: center;
   margin-top: 20px;
-  color: #4A6E57;
+  color: #15803d;
 }
 
 .register-link a {
-  color: #2E8B57;
+  color: #22c55e;
   text-decoration: none;
 }
 
