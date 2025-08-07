@@ -10,7 +10,7 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
-  background-color: #f8f9fa;
+  background-color: #ecfdf5; /* Light mint green for background */
   padding: 20px;
 }
 
@@ -21,7 +21,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #343a40;
+  background-color: #064e3b; /* Darker forest green for luxury feel */
   color: #fff;
   padding: 1rem 2rem;
   margin-bottom: 2rem;
@@ -54,7 +54,7 @@ body {
   min-height: 70vh;
 }
 
-/* Positioning specific cards if needed */
+/* Positioning specific cards */
 .income-card {
   grid-column: 1;
   grid-row: 1;
@@ -87,8 +87,6 @@ body {
 
 .welcome-card .smiley {
   font-size: 4.5rem;
-  width: auto;
-  height: auto;
   border: none;
   background: none;
   display: flex;
@@ -115,8 +113,6 @@ body {
 
 .welcome-card h2 {
   font-size: 1.3rem;
-  border-bottom: none;
-  margin-bottom: 0.5rem;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -137,8 +133,7 @@ body {
 .card h2 {
   font-size: 2rem;
   font-weight: 700;
-  color: #343a40;
-  border-bottom: none;
+  color: #14532d; /* Wealthy green title */
   margin-bottom: 1rem;
 }
 
@@ -146,7 +141,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   padding: 0.7rem 0;
   border-bottom: 1px solid #eee;
 }
@@ -158,19 +153,19 @@ body {
 
 .income-card:hover,
 .balance-card:hover {
-  box-shadow: 0 8px 16px rgba(1, 250, 9, 0.6);
-}
-
-.expense-card:hover {
-  box-shadow: 0 8px 16px rgba(250, 1, 1, 0.6);
+  box-shadow: 0 8px 16px rgba(34, 197, 94, 0.6); /* Accent green */
 }
 
 .transaction-card:hover {
-  box-shadow: 0 8px 16px rgba(1, 42, 250, 0.6);
+  box-shadow: 0 8px 16px rgba(22, 163, 74, 0.6); /* Mid-wealthy green */
+}
+
+.expense-card:hover {
+  box-shadow: 0 8px 16px rgba(250, 1, 1, 0.6); /* Red stays for contrast */
 }
 
 .card-amount.income {
-  color: #2ecc71;
+  color: #22c55e;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -179,15 +174,6 @@ body {
   color: #f50606;
   font-size: 1.5rem;
   font-weight: 700;
-}
-
-.card li {
-  display: flex;
-  justify-content: space-between;
-  font-weight: 700;
-  font-size: 1.2rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid #eee;
 }
 
 /* ================================
@@ -204,6 +190,7 @@ body {
 
 .form-section h2 {
   margin-bottom: 1rem;
+  color: #14532d; /* Rich green heading */
 }
 
 .form-section form {
@@ -235,7 +222,7 @@ body {
 
 .form-section button {
   margin-top: 1.5rem;
-  background-color: #007bff;
+  background-color: #22c55e; /* Accent green */
   color: #fff;
   border: none;
   cursor: pointer;
@@ -243,7 +230,7 @@ body {
 }
 
 .form-section button:hover {
-  background-color: #0056b3;
+  background-color: #15803d; /* Darker green on hover */
 }
 
 .form-group.button-group {
@@ -310,9 +297,9 @@ body {
 }
 
 .message-box.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
 }
 
 .message-box.error {
@@ -332,7 +319,6 @@ body {
   color: #0c5460;
   border: 1px solid #bee5eb;
 }
-
 
 .lightbox {
   position: fixed;
@@ -362,7 +348,7 @@ body {
 
 .view-btn {
   padding: 0.5rem 1rem;
-  background-color: #007bff;
+  background-color: #22c55e;
   color: white;
   border: none;
   border-radius: 6px;
@@ -370,6 +356,5 @@ body {
 }
 
 .view-btn:hover {
-  background-color: #0056b3;
+  background-color: #15803d;
 }
-
