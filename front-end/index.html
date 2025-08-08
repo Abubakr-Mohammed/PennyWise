@@ -22,8 +22,8 @@
   <!--Message box container to communicate with user-->
   <div id="message-box" class="message-box"></div>
 
-  <!-- 🧱 MAIN GRID CONTAINER -->
-  <main class="main-grid">
+  <!-- 🧱 MAIN GRID CONTAINER (Home View) -->
+  <main id="home-view" class="main-grid">
     
     <!-- 🔲 INCOME CARD -->
     <div class="card income-card">
@@ -68,6 +68,20 @@
     </div>
 
   </main>
+
+  <!-- 📊 CHARTS VIEW (Hidden by default) -->
+  <!--<section> is optional (instead of <div>) but adds meaning for screen readers, and code structure--> 
+  <section id="charts-view" class="charts-grid hidden">
+      <div class="chart-container">
+          <h2>Income vs Expenses</h2>
+          <canvas id="pieChart"></canvas>
+      </div>
+      <div class="chart-container">
+          <h2>Monthly Balance</h2>
+          <canvas id="barChart"></canvas>
+      </div>
+      <button id="home-btn" class="view-btn">Home</button>
+  </section>
 
   <!-- 🧾 TRANSACTION FORM MODAL (LIGHTBOX) -->
   <div id="modal" class="modal">
