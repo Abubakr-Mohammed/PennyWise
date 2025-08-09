@@ -58,7 +58,6 @@ def login():
         "exp": int((datetime.now(timezone.utc) + timedelta(hours=1)).timestamp())
     }
 
-    secret = secret = current_app.config['SECRET_KEY']
-    token = jwt.encode(payload, secret, algorithm="HS256")
+    token = jwt.encode(payload, current_app.config['SECRET_KEY'], algorithm="HS256")
 
     return jsonify({"status": "success", "message": "Login successful", "token": token}), 200

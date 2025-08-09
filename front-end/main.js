@@ -24,13 +24,16 @@ const balanceJsonOutput = document.getElementById("balance-json-output");
 const logoutBtn = document.getElementById("logout-btn");
 
 // ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
-const USER_ID = 1; // Replace with dynamic ID if logged-in user is known
 
 viewBalanceBtn.addEventListener("click", async () => {
     balanceJsonOutput.textContent = "Loading...";
+    const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch(`http://127.0.0.1:5000/api/balance/${USER_ID}`);
+        const res = await fetch("http://127.0.0.1:5000/api/balance", {
+            method: "GET",
+            headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
+        });
         const data = await res.json();
         console.log("Balance API response:", data); // 👈 DEBUG HERE
 
@@ -109,6 +112,8 @@ async function addTransaction(e) {
     e.preventDefault();
     showMessage("Submitting transaction...", "loading");
 
+    const token = localStorage.getItem("token");
+
     const desc = document.getElementById("desc").value.trim();
     const type = document.getElementById("type").value;
     const userAmount = parseFloat(document.getElementById("amount").value);
@@ -121,12 +126,12 @@ async function addTransaction(e) {
 
     const amount = type === "income" ? Math.abs(userAmount) : -Math.abs(userAmount);
 
-    const transactionData = {description: desc, type, amount, date, user_id: 1};
+    const transactionData = {description: desc, type, amount, date};
 
     try {
         const res = await fetch("http://localhost:5000/api/transactions", {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
             body: JSON.stringify(transactionData),
         });
 
@@ -146,8 +151,13 @@ async function loadTransactions() {
     transactionList.innerHTML = `<li>Loading transactions...</li>`;
     showMessage("Loading transactions...", "loading");
 
+    const token = localStorage.getItem("token");
+
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/transactions");
+        const res = await fetch("http://127.0.0.1:5000/api/transactions", {
+            method: "GET",
+            headers: {Authorization: `Bearer ${token}`},
+        });
         const data = await res.json();
 
         if (data.status === "success" && Array.isArray(data.data)) {
@@ -205,9 +215,12 @@ async function deleteTransaction(transactionId) {
     const confirmDelete = confirm("Are you sure you want to delete this transaction?");
     if (!confirmDelete) return;
 
+    const token = localStorage.getItem("token");
+
     try {
         const res = await fetch(`http://localhost:5000/api/transactions/${transactionId}`, {
             method: "DELETE",
+            headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         });
 
         if (!res.ok) throw new Error("Failed to delete transaction");
@@ -222,13 +235,14 @@ async function deleteTransaction(transactionId) {
 
 // ========== Logout button ==========
 logoutBtn.addEventListener("click", () => {
-  // Optional: Clear user session info (if using localStorage, cookies, etc.)
-  // localStorage.clear();
-  window.location.href = "login.html"; // adjust if different filename
+    // Optional: Clear user session info (if using localStorage, cookies, etc.)
+    // localStorage.clear();
+    window.location.href = "login.html"; // adjust if different filename
 });
 
 // ========== 🚀 Initialize ==========
 function initApp() {
+    console.log("initApp");
     handleModalEvents();
     form.addEventListener("submit", addTransaction);
     loadTransactions();

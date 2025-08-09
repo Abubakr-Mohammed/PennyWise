@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models.transaction_model import Transaction
+from utils.decorator import token_required
 from extensions import db
 
 transaction_bp = Blueprint('transactions', __name__)
@@ -7,10 +8,11 @@ transaction_bp = Blueprint('transactions', __name__)
 # Route: POST /api/transactions
 # Description: Adds a new transaction to the database
 @transaction_bp.route('/transactions', methods=['POST'])
-def create_transactions():
+@token_required # gives access to authenticated user_id
+def create_transactions(user_id):
     data = request.get_json()
 
-    required_fields = ['description', 'amount', 'type', 'user_id']
+    required_fields = ['description', 'amount', 'type', 'date']
     for field in required_fields:
         if field not in data:
             return jsonify({"status": "error", "message": f"Missing field: {field}"}), 400
@@ -34,8 +36,8 @@ def create_transactions():
             description=data['description'],
             amount=amount,
             type=data['type'],
-            date=data.get('date'),
-            user_id=data['user_id']
+            date=data['date'],
+            user_id=user_id
         )
 
         db.session.add(new_transaction)
@@ -50,7 +52,8 @@ def create_transactions():
 # Route: POST /api/transactions
 # Description: Gets and displays transaction from database
 @transaction_bp.route('/transactions', methods=['GET'])
-def get_transactions():
+@token_required
+def get_transactions(user_id):
     try:
         transactions = Transaction.query
 
@@ -59,7 +62,6 @@ def get_transactions():
         amount = request.args.get('amount')
         type = request.args.get('type')
         date = request.args.get('date')
-        user_id = request.args.get('user_id')
 
         if id:
             transactions = transactions.filter_by(id=id)
@@ -76,15 +78,15 @@ def get_transactions():
         if date:
             transactions = transactions.filter_by(date=date)
 
-        if user_id:
-            transactions = transactions.filter_by(user_id=user_id)
+        transactions = transactions.filter_by(user_id=user_id)
 
         result = [t.to_dict() for t in transactions]
         return jsonify({"status": "success", "message": "Retrieved Transactions", "data": result}), 200
     except Exception:
         return jsonify({"status": "error", "message": "Failed to retrieve transactions"}), 500
 
-@transaction_bp.route('/balance/<int:user_id>', methods=['GET'])
+@transaction_bp.route('/balance', methods=['GET'])
+@token_required
 def get_user_balance(user_id):
     try:
         # Get all transactions for this user
@@ -106,13 +108,17 @@ def get_user_balance(user_id):
 # Route: DELETE /api/transactions
 # Description: Deletes transaction from database
 @transaction_bp.route('/transactions/<int:id>', methods=['DELETE'])
-def delete_transaction(id):
+@token_required
+def delete_transaction(id, user_id):
+    transaction = Transaction.query.get(id)
+
+    if not transaction:
+        return jsonify({"status": "error", "message": "Transaction not found"}), 404
+    
+    if transaction.user_id != user_id:
+        return jsonify({"status": "error", "message": "Forbidden: You cannot delete this transaction"}), 403
+    
     try:
-        transaction = Transaction.query.get(id)
-
-        if not transaction:
-            return jsonify({"status": "error", "message": "Transaction not found"}), 404
-
         db.session.delete(transaction)
         db.session.commit()
         return jsonify({"status": "success", "message": "Transaction deleted successfully"}), 200
@@ -122,12 +128,16 @@ def delete_transaction(id):
         return jsonify({"status": "error", "message": "Failed to delete transaction"}), 500
 
 @transaction_bp.route('/transactions/<int:id>', methods=['GET'])
-def get_transaction_by_id(id):
+@token_required
+def get_transaction_by_id(id, user_id):
     try:
         transaction = Transaction.query.get(id)
         
         if not transaction:
             return jsonify({"status": "error", "message": "Transaction not found"}), 404
+        
+        if transaction.user_id != user_id:
+            return jsonify({"status": "error", "message": "Forbidden: You cannot delete this transaction"}), 403
 
         return jsonify({"status": "success", "message": "Transaction Retrieved", "data": transaction.to_dict()}), 200
 

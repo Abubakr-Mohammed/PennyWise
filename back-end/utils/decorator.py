@@ -18,6 +18,6 @@ def token_required(f):
         except Exception:
             return jsonify({"status": "error", "message": "Invalid token"}), 401
 
-        return f(authenticated_user_id=user_id, *args, **kwargs)
+        return f(user_id=user_id, *args, **kwargs)
 
     return decorated
