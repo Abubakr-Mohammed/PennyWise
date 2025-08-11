@@ -95,7 +95,6 @@ async function getPieChartData() {
 
     let incomeTotal = 0;
     let expenseTotal = 0;
-
     data.forEach(txn => {
         if (txn.amount >= 0) incomeTotal += txn.amount;
         else expenseTotal += Math.abs(txn.amount);
@@ -121,9 +120,8 @@ async function getBarChartData() {
         throw new Error("Invalid bar chart data response");
     }
 
-    return data; // already [{ month: "Jan", balance: 1200 }, ...]
+    return data;
 }
-
 // ========== 📈 Render Pie Chart ==========
 // Takes the percentage values from getPieChartData() and creates a pie chart.
 function renderPieChart(data) {
