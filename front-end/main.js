@@ -82,37 +82,26 @@ homeBtn.addEventListener("click", (e) => {
 // This gets the last 5 transactions from the backend and calculates
 // the percentage split between Income and Expenses.
 async function getPieChartData() {
-    const token = localStorage.getItem("token"); // Authentication token
-
-    // Request last 5 transactions
+    const token = localStorage.getItem("token");
     const res = await fetch("http://127.0.0.1:5000/api/transactions?limit=5", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
 
     const data = await res.json();
-
-    // Validate response
-    if (data.status !== "success" || !Array.isArray(data.data)) {
+    if (!Array.isArray(data)) {
         throw new Error("Invalid pie chart data response");
     }
 
-    // Sum up income and expenses separately
     let incomeTotal = 0;
     let expenseTotal = 0;
 
-    data.data.forEach(txn => {
-        if (txn.amount >= 0) {
-            incomeTotal += txn.amount;
-        } else {
-            expenseTotal += Math.abs(txn.amount); // Expenses stored as negative, so take absolute value
-        }
+    data.forEach(txn => {
+        if (txn.amount >= 0) incomeTotal += txn.amount;
+        else expenseTotal += Math.abs(txn.amount);
     });
 
-    // Avoid division by zero by defaulting total to 1
     const total = incomeTotal + expenseTotal || 1;
-
-    // Return as percentage values (rounded to 2 decimals)
     return {
         incomePercent: ((incomeTotal / total) * 100).toFixed(2),
         expensePercent: ((expenseTotal / total) * 100).toFixed(2)
@@ -120,25 +109,19 @@ async function getPieChartData() {
 }
 
 // ========== 📊 Fetch Bar Chart Data ==========
-// This gets monthly balances from the backend, grouped by month.
 async function getBarChartData() {
-    const token = localStorage.getItem("token"); // Authentication token
-
-    // Request monthly grouped transaction data
+    const token = localStorage.getItem("token");
     const res = await fetch("http://127.0.0.1:5000/api/transactions/grouped/month", {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
     });
 
     const data = await res.json();
-
-    // Validate response
-    if (data.status !== "success" || !Array.isArray(data.data)) {
+    if (!Array.isArray(data)) {
         throw new Error("Invalid bar chart data response");
     }
 
-    // Expected format: [{ month: "Jan", balance: 1200 }, ...]
-    return data.data;
+    return data; // already [{ month: "Jan", balance: 1200 }, ...]
 }
 
 // ========== 📈 Render Pie Chart ==========
