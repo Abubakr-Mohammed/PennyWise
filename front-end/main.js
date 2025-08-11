@@ -31,6 +31,8 @@ const lightbox = document.getElementById("balance-lightbox");
 const closeLightboxBtn = document.getElementById("close-lightbox-btn");
 const balanceJsonOutput = document.getElementById("balance-json-output");
 const logoutBtn = document.getElementById("logout-btn");
+
+/*
 //These are to grab references to buttons and view containers from the HTML.
 // These are used to switch between Home and Charts views.
 const chartsBtn = document.getElementById("Charts-btn"); // Button to open Charts view
@@ -184,6 +186,7 @@ function renderBarChart(data) {
         }
     });
 }
+*/
 
 // ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
 viewBalanceBtn.addEventListener("click", async () => {
