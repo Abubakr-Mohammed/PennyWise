@@ -8,9 +8,18 @@
 // 4. Delete transaction logic
 // ===============================
 
+// ===============================
+// 📊 Charts View Logic – Pennywise
+// ===============================
+// Purpose of this section:
+// 1. Allow user to switch between "Home" and "Charts" views.
+// 2. Fetch financial data from the backend to feed into charts.
+// 3. Render Pie & Bar charts using Chart.js with dynamic data.
+// ===============================
+
 // ========== ⚙️ DOM Elements ==========
 const modal = document.getElementById("modal");
-const openFormBtn = document.getElementById("open-form");
+const openFormBtn = document.getElementById("open-form"); // Grab references to buttons or elements in HTML
 const closeBtn = document.querySelector(".close-button");
 const form = document.querySelector(".transaction-form");
 const transactionList = document.getElementById("transactions-list");
@@ -22,9 +31,180 @@ const lightbox = document.getElementById("balance-lightbox");
 const closeLightboxBtn = document.getElementById("close-lightbox-btn");
 const balanceJsonOutput = document.getElementById("balance-json-output");
 const logoutBtn = document.getElementById("logout-btn");
+//These are to grab references to buttons and view containers from the HTML.
+// These are used to switch between Home and Charts views.
+const chartsBtn = document.getElementById("Charts-btn"); // Button to open Charts view
+const homeBtn = document.getElementById("home-btn");      // Button to go back Home
+const homeView = document.getElementById("home-view");    // Home screen container
+const chartsView = document.getElementById("charts-view");// Charts screen container
+
+// ========== 📈 Chart.js Variables ==========
+// We'll store Chart.js instances here so we can destroy them before re-rendering
+// (prevents overlapping data when the user revisits the Charts page)
+let pieChartInstance = null;
+let barChartInstance = null;
+
+// ========== 🔄 Show Charts View ==========
+// When the user clicks the "Charts" button:
+// 1. Hide the Home view.
+// 2. Show the Charts view.
+// 3. Fetch fresh data from the backend and render charts.
+chartsBtn.addEventListener("click", async (e) => {
+    e.preventDefault(); // Prevents any default link/button behavior
+
+    // Step 1: Switch views
+    homeView.classList.add("hidden");
+    chartsView.classList.remove("hidden");
+
+    try {
+        // Step 2: Fetch data for each chart
+        const pieData = await getPieChartData();
+        const barData = await getBarChartData();
+
+        // Step 3: Render both charts
+        renderPieChart(pieData);
+        renderBarChart(barData);
+    } catch (err) {
+        console.error("Error loading chart data:", err);
+        showMessage("Failed to load charts.", "error"); // Show user-friendly error
+    }
+});
+
+// ========== 🏠 Go Back Home ==========
+// When the "Home" button is clicked, we hide Charts view and show Home view again.
+homeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    chartsView.classList.add("hidden");
+    homeView.classList.remove("hidden");
+});
+
+// ========== 📊 Fetch Pie Chart Data ==========
+// This gets the last 5 transactions from the backend and calculates
+// the percentage split between Income and Expenses.
+async function getPieChartData() {
+    const token = localStorage.getItem("token"); // Authentication token
+
+    // Request last 5 transactions
+    const res = await fetch("http://127.0.0.1:5000/api/transactions?limit=5", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json();
+
+    // Validate response
+    if (data.status !== "success" || !Array.isArray(data.data)) {
+        throw new Error("Invalid pie chart data response");
+    }
+
+    // Sum up income and expenses separately
+    let incomeTotal = 0;
+    let expenseTotal = 0;
+
+    data.data.forEach(txn => {
+        if (txn.amount >= 0) {
+            incomeTotal += txn.amount;
+        } else {
+            expenseTotal += Math.abs(txn.amount); // Expenses stored as negative, so take absolute value
+        }
+    });
+
+    // Avoid division by zero by defaulting total to 1
+    const total = incomeTotal + expenseTotal || 1;
+
+    // Return as percentage values (rounded to 2 decimals)
+    return {
+        incomePercent: ((incomeTotal / total) * 100).toFixed(2),
+        expensePercent: ((expenseTotal / total) * 100).toFixed(2)
+    };
+}
+
+// ========== 📊 Fetch Bar Chart Data ==========
+// This gets monthly balances from the backend, grouped by month.
+async function getBarChartData() {
+    const token = localStorage.getItem("token"); // Authentication token
+
+    // Request monthly grouped transaction data
+    const res = await fetch("http://127.0.0.1:5000/api/transactions/grouped/month", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json();
+
+    // Validate response
+    if (data.status !== "success" || !Array.isArray(data.data)) {
+        throw new Error("Invalid bar chart data response");
+    }
+
+    // Expected format: [{ month: "Jan", balance: 1200 }, ...]
+    return data.data;
+}
+
+// ========== 📈 Render Pie Chart ==========
+// Takes the percentage values from getPieChartData() and creates a pie chart.
+function renderPieChart(data) {
+    const ctx = document.getElementById("pieChart").getContext("2d");
+
+    // Destroy old chart instance before creating a new one
+    if (pieChartInstance) pieChartInstance.destroy();
+
+    // Create new pie chart
+    pieChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["Income", "Expenses"],
+            datasets: [{
+                data: [data.incomePercent, data.expensePercent],
+                backgroundColor: ["#22c55e", "#ef4444"] // Green for income, Red for expenses
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: "bottom" }, // Move legend to bottom for better fit
+                title: { display: true, text: "Income vs Expenses (%)" }
+            }
+        }
+    });
+}
+
+// ========== 📈 Render Bar Chart ==========
+// Takes monthly balances from getBarChartData() and creates a bar chart.
+function renderBarChart(data) {
+    const ctx = document.getElementById("barChart").getContext("2d");
+
+    // Destroy old chart instance before creating a new one
+    if (barChartInstance) barChartInstance.destroy();
+
+    // Create new bar chart
+    barChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(item => item.month), // X-axis labels = months
+            datasets: [{
+                label: 'Balance',
+                data: data.map(item => item.balance), // Y-axis values = balances
+                backgroundColor: "#3b82f6" // Blue bars
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }, // Hide legend since label is obvious
+                title: { display: true, text: "Monthly Balances" }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true, // Always start Y-axis at zero
+                    ticks: { callback: value => `$${value}` } // Format as currency
+                }
+            }
+        }
+    });
+}
 
 // ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
-
 viewBalanceBtn.addEventListener("click", async () => {
     balanceJsonOutput.textContent = "Loading...";
     const token = localStorage.getItem("token");
