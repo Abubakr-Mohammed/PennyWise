@@ -32,13 +32,12 @@ const closeLightboxBtn = document.getElementById("close-lightbox-btn");
 const balanceJsonOutput = document.getElementById("balance-json-output");
 const logoutBtn = document.getElementById("logout-btn");
 
-/*
 //These are to grab references to buttons and view containers from the HTML.
 // These are used to switch between Home and Charts views.
 const chartsBtn = document.getElementById("Charts-btn"); // Button to open Charts view
-const homeBtn = document.getElementById("home-btn");      // Button to go back Home
-const homeView = document.getElementById("home-view");    // Home screen container
-const chartsView = document.getElementById("charts-view");// Charts screen container
+const homeBtn = document.getElementById("home-btn"); // Button to go back Home
+const homeView = document.getElementById("home-view"); // Home screen container
+const chartsView = document.getElementById("charts-view"); // Charts screen container
 
 // ========== 📈 Chart.js Variables ==========
 // We'll store Chart.js instances here so we can destroy them before re-rendering
@@ -87,17 +86,17 @@ async function getPieChartData() {
     const token = localStorage.getItem("token");
     const res = await fetch("http://127.0.0.1:5000/api/transactions?limit=5", {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {Authorization: `Bearer ${token}`},
     });
 
     const data = await res.json();
-    if (!Array.isArray(data)) {
+    if (!Array.isArray(data.data)) {
         throw new Error("Invalid pie chart data response");
     }
 
     let incomeTotal = 0;
     let expenseTotal = 0;
-    data.forEach(txn => {
+    data.data.forEach((txn) => {
         if (txn.amount >= 0) incomeTotal += txn.amount;
         else expenseTotal += Math.abs(txn.amount);
     });
@@ -105,7 +104,7 @@ async function getPieChartData() {
     const total = incomeTotal + expenseTotal || 1;
     return {
         incomePercent: ((incomeTotal / total) * 100).toFixed(2),
-        expensePercent: ((expenseTotal / total) * 100).toFixed(2)
+        expensePercent: ((expenseTotal / total) * 100).toFixed(2),
     };
 }
 
@@ -114,15 +113,15 @@ async function getBarChartData() {
     const token = localStorage.getItem("token");
     const res = await fetch("http://127.0.0.1:5000/api/transactions/grouped/month", {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {Authorization: `Bearer ${token}`},
     });
 
     const data = await res.json();
-    if (!Array.isArray(data)) {
+    if (!Array.isArray(data.data)) {
         throw new Error("Invalid bar chart data response");
     }
 
-    return data;
+    return data.data;
 }
 // ========== 📈 Render Pie Chart ==========
 // Takes the percentage values from getPieChartData() and creates a pie chart.
@@ -134,21 +133,23 @@ function renderPieChart(data) {
 
     // Create new pie chart
     pieChartInstance = new Chart(ctx, {
-        type: 'pie',
+        type: "pie",
         data: {
             labels: ["Income", "Expenses"],
-            datasets: [{
-                data: [data.incomePercent, data.expensePercent],
-                backgroundColor: ["#22c55e", "#ef4444"] // Green for income, Red for expenses
-            }]
+            datasets: [
+                {
+                    data: [data.incomePercent, data.expensePercent],
+                    backgroundColor: ["#22c55e", "#ef4444"], // Green for income, Red for expenses
+                },
+            ],
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { position: "bottom" }, // Move legend to bottom for better fit
-                title: { display: true, text: "Income vs Expenses (%)" }
-            }
-        }
+                legend: {position: "bottom"}, // Move legend to bottom for better fit
+                title: {display: true, text: "Income vs Expenses (%)"},
+            },
+        },
     });
 }
 
@@ -162,31 +163,32 @@ function renderBarChart(data) {
 
     // Create new bar chart
     barChartInstance = new Chart(ctx, {
-        type: 'bar',
+        type: "bar",
         data: {
-            labels: data.map(item => item.month), // X-axis labels = months
-            datasets: [{
-                label: 'Balance',
-                data: data.map(item => item.balance), // Y-axis values = balances
-                backgroundColor: "#3b82f6" // Blue bars
-            }]
+            labels: data.map((item) => item.month), // X-axis labels = months
+            datasets: [
+                {
+                    label: "Balance",
+                    data: data.map((item) => item.balance), // Y-axis values = balances
+                    backgroundColor: "#3b82f6", // Blue bars
+                },
+            ],
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { display: false }, // Hide legend since label is obvious
-                title: { display: true, text: "Monthly Balances" }
+                legend: {display: false}, // Hide legend since label is obvious
+                title: {display: true, text: "Monthly Balances"},
             },
             scales: {
                 y: {
                     beginAtZero: true, // Always start Y-axis at zero
-                    ticks: { callback: value => `$${value}` } // Format as currency
-                }
-            }
-        }
+                    ticks: {callback: (value) => `$${value}`}, // Format as currency
+                },
+            },
+        },
     });
 }
-*/
 
 // ========== 💡 View Total Balance Lightbox/Modal Interactions ==========
 viewBalanceBtn.addEventListener("click", async () => {
