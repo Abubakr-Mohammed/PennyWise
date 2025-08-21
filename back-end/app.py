@@ -26,4 +26,4 @@ app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='')  # No prefix needed as route already includes /api
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

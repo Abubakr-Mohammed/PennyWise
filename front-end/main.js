@@ -32,7 +32,6 @@ const closeLightboxBtn = document.getElementById("close-lightbox-btn");
 const balanceJsonOutput = document.getElementById("balance-json-output");
 const logoutBtn = document.getElementById("logout-btn");
 
-
 //These are to grab references to buttons and view containers from the HTML.
 // These are used to switch between Home and Charts views.
 const chartsBtn = document.getElementById("Charts-btn"); // Button to open Charts view
@@ -85,7 +84,7 @@ homeBtn.addEventListener("click", (e) => {
 // the percentage split between Income and Expenses.
 async function getPieChartData() {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://127.0.0.1:5000/api/transactions?limit=5", {
+    const res = await fetch(`${API_URL}/api/transactions?limit=5`, {
         method: "GET",
         headers: {Authorization: `Bearer ${token}`},
     });
@@ -112,7 +111,7 @@ async function getPieChartData() {
 // ========== 📊 Fetch Bar Chart Data ==========
 async function getBarChartData() {
     const token = localStorage.getItem("token");
-    const res = await fetch("http://127.0.0.1:5000/api/transactions/grouped/month", {
+    const res = await fetch(`${API_URL}/api/transactions/grouped/month`, {
         method: "GET",
         headers: {Authorization: `Bearer ${token}`},
     });
@@ -197,7 +196,7 @@ viewBalanceBtn.addEventListener("click", async () => {
     const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/balance", {
+        const res = await fetch(`${API_URL}/api/balance`, {
             method: "GET",
             headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         });
@@ -296,7 +295,7 @@ async function addTransaction(e) {
     const transactionData = {description: desc, type, amount, date};
 
     try {
-        const res = await fetch("http://localhost:5000/api/transactions", {
+        const res = await fetch(`${API_URL}/api/transactions`, {
             method: "POST",
             headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
             body: JSON.stringify(transactionData),
@@ -321,7 +320,7 @@ async function loadTransactions() {
     const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch("http://127.0.0.1:5000/api/transactions", {
+        const res = await fetch(`${API_URL}/api/transactions`, {
             method: "GET",
             headers: {Authorization: `Bearer ${token}`},
         });
@@ -385,7 +384,7 @@ async function deleteTransaction(transactionId) {
     const token = localStorage.getItem("token");
 
     try {
-        const res = await fetch(`http://localhost:5000/api/transactions/${transactionId}`, {
+        const res = await fetch(`${API_URL}/api/transactions/${transactionId}`, {
             method: "DELETE",
             headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         });
@@ -417,5 +416,3 @@ function initApp() {
 
 // ========== 🔃 On Page Load ==========
 window.addEventListener("DOMContentLoaded", initApp);
-
-
