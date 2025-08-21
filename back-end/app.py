@@ -13,7 +13,6 @@ from models.user_model import User
 app = Flask(__name__)
 CORS(app)
 
-
 if os.getenv('FLASK_ENV') != "production":
     load_dotenv()
 
@@ -29,7 +28,7 @@ app.register_blueprint(transaction_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='')  # No prefix needed as route already includes /api
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run()
+with app.app_context():
+    db.create_all()
+    print("done!")
+
