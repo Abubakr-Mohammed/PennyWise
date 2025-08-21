@@ -11,8 +11,7 @@ venv/
 .DS_Store
 
 # Python bytecode cache files
-__pycache__/
-back-end/__pycache__/
+**/__pycache__/
 
 *.md
 .env
