@@ -11,10 +11,12 @@ from routes.user_routes import user_bp
 app = Flask(__name__)
 CORS(app)
 
-load_dotenv()
 
-app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+if os.getenv('FLASK_ENV') != "production":
+    load_dotenv()
+
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app) 
