@@ -22,12 +22,13 @@ Users can:
 ## Project Structure
 back-end/
 ├── controllers/          # Business logic layer
-│    └── transaction_controller.py
-├──   models/             # Database models
-│ └── transaction_model.py
-├── routes/                # API route definitions
-│    └── test_route.py
-├── requirements.txt       # Python dependencies
+│   └── transaction_controller.py
+├── models/              # Database models
+│   └── transaction_model.py
+├── routes/              # API route definitions
+│   └── test_route.py
+├── requirements.txt     # Python dependencies
+
 
 front-end/
 ├── index.html       # Main application page
