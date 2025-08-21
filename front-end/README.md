@@ -11,16 +11,21 @@ It allows users to:
 The frontend is built using **HTML, CSS, and JavaScript**, designed to be responsive and user-friendly.
 
 ---
-
 ## Project Structure
+```
 frontend/
-├── index.html        # Main dashboard page
-├── login.html        # User login page
-├── styles.css        # Global stylesheet
-├── scripts/          # JavaScript files
-│   └── app.js        # Main frontend logic
-└── assets/           # Images, icons, etc.
-
+├── public/                 # Static public files
+│   ├── index.html          # Main entry point
+│   └── favicon.ico         # App icon
+├── src/                    # Source files
+│   ├── assets/             # Images, fonts, icons, etc.
+│   ├── styles/             # Global and modular CSS
+│   ├── scripts/            # JavaScript code
+│   │   └── app.js          # Main frontend logic
+│   └── components/         # Reusable UI components
+├── package.json            # Dependencies & scripts
+└── README.md               # Project documentation
+```
 ---
 
 ## Installation
