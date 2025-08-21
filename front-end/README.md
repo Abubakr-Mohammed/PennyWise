@@ -13,18 +13,19 @@ The frontend is built using **HTML, CSS, and JavaScript**, designed to be respon
 ---
 ## Project Structure
 ```
-frontend/
-├── public/                 # Static public files
-│   ├── index.html          # Main entry point
-│   └── favicon.ico         # App icon
-├── src/                    # Source files
-│   ├── assets/             # Images, fonts, icons, etc.
-│   ├── styles/             # Global and modular CSS
-│   ├── scripts/            # JavaScript code
-│   │   └── app.js          # Main frontend logic
-│   └── components/         # Reusable UI components
-├── package.json            # Dependencies & scripts
-└── README.md               # Project documentation
+front-end/
+├── README.md # Project documentation
+├── config.js # Frontend configuration
+├── index.html # Homepage (dashboard/entry point)
+├── login.css # Styles for login page
+├── login.html # Login page
+├── login.js # Login logic
+├── main.html # Main application page
+├── main.js # Main application JS
+├── register.css # Styles for registration page
+├── register.html # Registration page
+├── register.js # Registration logic
+└── styles.css # Global styles
 ```
 ---
 
