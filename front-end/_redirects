@@ -1,0 +1,7 @@
+# Redirect root to login page
+
+/ /login.html 200
+
+# Allow direct access to index.html after login
+
+/index.html /index.html 200
