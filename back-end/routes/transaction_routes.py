@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 from models.transaction_model import Transaction
 from utils.decorator import token_required
 from extensions import db
-from sqlalchemy import extract, func
+from sqlalchemy import extract, func, cast, Date
 from datetime import datetime
 
 transaction_bp = Blueprint('transactions', __name__)
@@ -154,8 +154,9 @@ def get_transaction_by_id(id, user_id):
 @token_required
 def get_transactions_grouped_by_month(user_id):
     try:
-        current_year = datetime.now().year
-        current_month = datetime.now().month
+        now = datetime.now()
+        current_year = now.year
+        current_month = now.month
 
         # Decide range: first or last 6 months
         if current_month <= 6:
@@ -166,14 +167,14 @@ def get_transactions_grouped_by_month(user_id):
         # Query total balance per month in the range
         results = (
             db.session.query(
-                extract('month', Transaction.date).label('month'),
-                func.sum(Transaction.amount).label('total')
+                extract('month', cast(Transaction.date, Date)).label('month'),
+                func.coalesce(func.sum(Transaction.amount), 0).label('total')
             )
             .filter(Transaction.user_id == user_id)
-            .filter(extract('year', Transaction.date) == current_year)
-            .filter(extract('month', Transaction.date).in_(months_range))
-            .group_by(extract('month', Transaction.date))
-            .order_by(extract('month', Transaction.date))
+            .filter(extract('year', cast(Transaction.date, Date)) == current_year)
+            .filter(extract('month', cast(Transaction.date, Date)).in_(months_range))
+            .group_by(extract('month', cast(Transaction.date, Date)))
+            .order_by(extract('month', cast(Transaction.date, Date)))
             .all()
         )
 
@@ -181,10 +182,11 @@ def get_transactions_grouped_by_month(user_id):
         month_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
                         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
-        # Build response with 0 for months without transactions
+        # Build response
         data = []
         for m in months_range:
-            balance = next((float(row.total) for row in results if row.month == m), 0)
+            row = next((r for r in results if r.month == m), None)
+            balance = float(row.total) if row and row.total is not None else 0
             data.append({
                 "month": month_labels[m - 1],
                 "balance": round(balance, 2)
@@ -192,5 +194,5 @@ def get_transactions_grouped_by_month(user_id):
 
         return jsonify({"status": "success", "data": data}), 200
 
-    except Exception:
+    except Exception as e:
         return jsonify({"status": "error", "message": "Failed to group transactions"}), 500

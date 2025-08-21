@@ -28,7 +28,10 @@ app.register_blueprint(transaction_bp, url_prefix='/api')
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(user_bp, url_prefix='')  # No prefix needed as route already includes /api
 
-with app.app_context():
-    db.create_all()
-    print("done!")
 
+if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
+        print("done!")
+
+    app.run()

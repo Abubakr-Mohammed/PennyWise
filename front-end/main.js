@@ -201,7 +201,6 @@ viewBalanceBtn.addEventListener("click", async () => {
             headers: {"Content-Type": "application/json", Authorization: `Bearer ${token}`},
         });
         const data = await res.json();
-        console.log("Balance API response:", data); // 👈 DEBUG HERE
 
         if (data.status === "success" && typeof data.balance === "number") {
             balanceJsonOutput.textContent = `Total Balance: $${data.balance.toFixed(2)}`;
@@ -408,7 +407,6 @@ logoutBtn.addEventListener("click", () => {
 
 // ========== 🚀 Initialize ==========
 function initApp() {
-    console.log("initApp");
     handleModalEvents();
     form.addEventListener("submit", addTransaction);
     loadTransactions();
