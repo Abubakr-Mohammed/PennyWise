@@ -20,23 +20,32 @@ Users can:
 ---
 
 ## Project Structure
-back-end/
-├── controllers/          # Business logic layer
-│   └── transaction_controller.py
-├── models/              # Database models
-│   └── transaction_model.py
-├── routes/              # API route definitions
-│   └── test_route.py
-├── requirements.txt     # Python dependencies
+Pennywise/
+├── 📁 front-end
+│ ├── 📄 index.html # Main HTML file
+│ ├── 📄 main.js # Frontend JavaScript logic
+│ └── 📄 style.css # Styling and UI design
+│
+└── 📁 backend
+└── 📁 model
+└── 📄 transaction_model.py # Backend transaction model
 
 
-front-end/
-├── index.html       # Main application page
-├── login.html       # User authentication page
-├── styles.css       # Application styling
-├── scripts/          # Frontend logic
-│ └── app.js
-├── assets/ # Static assets (images, icons, etc.)
+Pennywise/
+├── 📁 src
+│ ├── 📄 main.py # Entry point of the application
+│ ├── 📄 utils.py # Utility functions
+│ └── 📁 modules
+│ └── 📄 helper.py # Helper module
+│
+├── 📁 tests
+│ └── 📄 test_main.py
+
+for the main application
+│
+├── 📄 README.md # Project documentation
+├── 📄 requirements.txt # Python dependencies
+└── 📄 .gitignore # Git ignore rules
 
 LICENSE # License information
 
