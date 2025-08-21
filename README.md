@@ -1,14 +1,7 @@
 # PennyWise
 
 ## Overview
-PennyWise is a **financial tracking system** that helps users manage their income and expenses in real time.  
-Users can:
-- Add, delete, and view transactions
-- Log in to access their personalized account
-- View dashboards with balances, income, and expenses
-- Receive financial insights and advice (bonus features)
-- Interact with a fully responsive frontend connected to a Flask backend
-
+- **PennyWise** is a financial tracking system that helps users manage their income and expenses in real time. Inspired by the idea to innovate web solutions with the implementation of modern technologies, Pennywise aims to use AI to help users identify and solve problems pertaining to budgeting and teach users about investing. Financial literacy is a crucial skill and with the help of our valuable team members we were able to create a platform that can improve the importance and spread awareness on financial literacy and how important it is to keep track of your budget.
 ---
 
 ## Tech Stack
@@ -20,120 +13,90 @@ Users can:
 ---
 
 ## Project Structure
+```
 Pennywise/
-├── 📁 front-end
-│ ├── 📄 index.html # Main HTML file
-│ ├── 📄 main.js # Frontend JavaScript logic
-│ └── 📄 style.css # Styling and UI design
-│
-└── 📁 backend
-└── 📁 model
-└── 📄 transaction_model.py # Backend transaction model
-
-
-Pennywise/
-├── 📁 src
-│ ├── 📄 main.py # Entry point of the application
-│ ├── 📄 utils.py # Utility functions
-│ └── 📁 modules
-│ └── 📄 helper.py # Helper module
-│
-├── 📁 tests
-│ └── 📄 test_main.py
-
-for the main application
-│
-├── 📄 README.md # Project documentation
-├── 📄 requirements.txt # Python dependencies
-└── 📄 .gitignore # Git ignore rules
-
-LICENSE # License information
-
+├── front-end/
+   └──README.md # Project documentation
+   └──config.js # Frontend configuration
+   └──index.html # Homepage (dashboard/entry point)
+   └──login.css # Styles for login page
+   └──login.html # Login page
+   └──login.js # Login logic
+   └──main.html # Main application page
+   └──main.js # Main application JS
+   └──register.css # Styles for registration page
+   └──register.html # Registration page
+   └──register.js # Registration logic
+   └──styles.css # Global styles
+```
 ---
-
+```
+Pennywise/
+├── 📁 back-end/
+   ├── controllers/          # Business logic layer
+   │   └── transaction_controller.py
+   ├── models/              # Database models
+   │   └── transaction_model.py
+   │   └── user_model.py
+   │   └── __init__.py
+   ├── instance/ 
+   │   └── pennywise.db     # user & transaction database
+   ├── routes/              # API route definitions
+   │   └── transaction_routes.py
+   │   └── auth_routes.py
+   │   └── user_routes.py
+   ├── utils/
+   │   └── decorator.py     
+   ├── requirements.txt     # Python dependencies
+```
+---
 ## Installation
 
 ### Prerequisites
-- Python 3.8+ (backend)
-- pip (backend)
-- Web browser (frontend)
-- *(Optional)* VS Code with Live Server
+
+-   Python 3.8 or higher
+-   pip (Python package installer)
 
 ### Setup Steps
-#### Backend
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   Create and activate a virtual environment:
 
-# Windows
-python -m venv venv
-.\venv\Scripts\activate
+1. **Navigate to the backend directory**
 
-# macOS/Linux
-python -m venv venv
-source venv/bin/activate
+    `cd back-end`
 
+2. **Create and activate a virtual environment**
 
-Install dependencies:
+    ```
+    # On Windows
+    python -m venv venv
+    .venv\Scripts\activate
 
-pip install -r requirements.txt
+    # On macOS/Linux
+    python -m venv venv
+    source venv/bin/activate
+    ```
 
+3. **Install dependencies**
 
-Initialize the database:
+    `pip install -r requirements.txt`
+---
 
-python init_db.py
+## Usage
+* Pennywise can be used for a wide variety of financial applications such as:
+  * Budget tracking
+  * Recording/Viewing/Deleting Transactions
+  * Interactive AI Chatbot for support
+  * Data Charts to visualize income/expenses  
 
+## Documentation
 
-Run the Flask server:
+### Frontend README
+- [Front-End Documentation](front-end/README.md)
 
-python app.py
+### Backend README
+- [Back-End Documentation](back-end/README.md)
 
-Frontend
+## Author
+- PennyWise Development Team
 
-Navigate to the frontend directory:
-
-cd frontend
-
-
-Open index.html in your browser (or use Live Server for auto-reload).
-
-Ensure the backend server is running for full functionality.
-
-(Optional) Update API URLs in scripts/app.js if the backend URL changes.
-
-Usage
-
-Access the app via your browser:
-
-Dashboard: frontend/index.html
-
-Login: frontend/login.html
-
-Add, view, or delete transactions.
-
-Interact with real-time backend data through JavaScript fetch calls.
-
-Frontend & Backend Documentation
-
-Frontend README
- – detailed frontend setup, structure, and instructions
-
-Backend README
- – detailed backend setup, structure, and instructions
-
-Development
-
-Add new features in frontend/scripts/app.js or backend routes/controllers
-
-Keep styling modular and code organized for readability
-
-Test locally with backend running for full functionality
-
-Author
-
-PennyWise Development Team
-
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+## License
+**This project is licensed under the MIT License - see the LICENSE file for details.**
