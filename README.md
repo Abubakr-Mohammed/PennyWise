@@ -1,5 +1,4 @@
 # PennyWise
-# PennyWise
 
 ## Overview
 PennyWise is a **financial tracking system** that helps users manage their income and expenses in real time.  
@@ -21,22 +20,24 @@ Users can:
 ---
 
 ## Project Structure
-PennyWise/
-├── backend/ # Backend API and database
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── requirements.txt
-│ └── app.py
-├── frontend/ # Frontend interface
-│ ├── index.html
-│ ├── login.html
-│ ├── styles.css
-│ ├── scripts/
-│ │ └── app.js
-│ └── assets/
-├── LICENSE
-└── README.md # Root README (this file)
+backend/
+├── controllers/ # Business logic layer
+│ └── transaction_controller.py
+├── models/ # Database models
+│ └── transaction_model.py
+├── routes/ # API route definitions
+│ └── test_route.py
+├── requirements.txt # Python dependencies
+
+frontend/
+├── index.html # Main dashboard page
+├── login.html # Login interface
+├── styles.css # Stylesheet
+├── scripts/ # JavaScript files
+│ └── app.js
+├── assets/ # Images and static assets
+
+LICENSE # License information
 
 yaml
 Copy
