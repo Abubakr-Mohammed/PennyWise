@@ -40,10 +40,6 @@ front-end/
 
 LICENSE # License information
 
-yaml
-Copy
-Edit
-
 ---
 
 ## Installation
