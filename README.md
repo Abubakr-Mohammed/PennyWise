@@ -20,22 +20,22 @@ Users can:
 ---
 
 ## Project Structure
-backend/
-├── controllers/ # Business logic layer
-│ └── transaction_controller.py
-├── models/ # Database models
+back-end/
+├── controllers/          # Business logic layer
+│    └── transaction_controller.py
+├──   models/             # Database models
 │ └── transaction_model.py
-├── routes/ # API route definitions
-│ └── test_route.py
-├── requirements.txt # Python dependencies
+├── routes/                # API route definitions
+│    └── test_route.py
+├── requirements.txt       # Python dependencies
 
-frontend/
-├── index.html # Main dashboard page
-├── login.html # Login interface
-├── styles.css # Stylesheet
-├── scripts/ # JavaScript files
+front-end/
+├── index.html       # Main application page
+├── login.html       # User authentication page
+├── styles.css       # Application styling
+├── scripts/          # Frontend logic
 │ └── app.js
-├── assets/ # Images and static assets
+├── assets/ # Static assets (images, icons, etc.)
 
 LICENSE # License information
 
