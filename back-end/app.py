@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 from routes.transaction_routes import transaction_bp
 from routes.auth_routes import auth_bp
 from routes.user_routes import user_bp
+from models.transaction_model import Transaction
+from models.user_model import User
 
 
 app = Flask(__name__)
