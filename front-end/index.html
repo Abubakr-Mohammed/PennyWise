@@ -2,142 +2,34 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Pennywise</title>
-        <link rel="stylesheet" href="styles.css" />
+        <title>Login | PennyWise</title>
+        <link rel="stylesheet" href="login.css" />
     </head>
     <body>
-        <!-- 🌐 NAVIGATION BAR -->
-        <nav class="navbar">
-            <h1>Pennywise</h1>
-            <ul>
-                <li><a href="#" id="logout-btn">Logout</a></li>
-                <li><a href="#" id="Charts-btn">Charts</a></li>
-                <li><a href="#" id="open-form">Add Transaction</a></li>
-                <li><a href="#" id="home-btn">Home</a></li>
-            </ul>
-        </nav>
-
-        <!--Message box container to communicate with user-->
-        <div id="message-box" class="message-box"></div>
-
-        <!-- 🧱 MAIN GRID CONTAINER (Home View) -->
-        <main id="home-view" class="main-grid">
-            <!-- 🔲 INCOME CARD -->
-            <div class="card income-card">
-                <h2>Income</h2>
-                <span class="card-amount income">+$4,000.00</span>
-            </div>
-
-            <!-- 🔲 EXPENSE CARD -->
-            <div class="card expense-card">
-                <h2>Expenses</h2>
-                <span class="card-amount expense">-$2,126.48</span>
-            </div>
-
-            <!-- 🧾 RECENT TRANSACTIONS CARD -->
-            <div class="card transaction-card">
-                <h2>Recent Transactions</h2>
-                <ul id="transactions-list">
-                    <!-- JavaScript will insert real transaction <li> elements here -->
-                </ul>
-            </div>
-
-            <!-- 💳 Total Balance Card -->
-            <div class="card balance-card">
-                <h3>Total Balance</h3>
-                <button id="view-balance-btn" class="view-btn">View Total Balance</button>
-            </div>
-
-            <!-- 👇 Lightbox Modal (hidden by default) -->
-            <div id="balance-lightbox" class="lightbox hidden">
-                <div class="lightbox-content">
-                    <pre id="balance-json-output">Loading...</pre>
-                    <button id="close-lightbox-btn">Close</button>
+        <div class="wrapper">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="input-box">
+                    <input type="text" id="username" name="username" required />
+                    <label>Username</label>
                 </div>
-            </div>
-            <!-- 👋 WELCOME CARD (right side) -->
-            <div class="card welcome-card">
-                <div class="smiley">😊</div>
-                <h2>Welcome to Pennywise!</h2>
-                <div class="welcome-message">
-                    We're glad you're here!<br />Manage your money with ease and confidence.
+                <div class="input-box">
+                    <input type="password" id="password" name="password" required />
+                    <label for="password">Password</label>
                 </div>
-            </div>
-        </main>
-
-        <!-- 📊 CHARTS VIEW (Hidden by default) -->
-        <!--<section> is optional (instead of <div>) but adds meaning for screen readers, and code structure-->
-        <section id="charts-view" class="charts-grid hidden">
-            <div class="chart-container">
-                <h2>Income vs Expenses</h2>
-                <canvas id="pieChart"></canvas>
-            </div>
-            <div class="chart-container">
-                <h2>Monthly Balance</h2>
-                <canvas id="barChart"></canvas>
-            </div>
-        </section>
-
-        <!-- 🧾 TRANSACTION FORM MODAL (LIGHTBOX) -->
-        <div id="modal" class="modal">
-            <div class="modal-content">
-                <span class="close-button">&times;</span>
-
-                <section id="transaction-form" class="form-section">
-                    <h2>Add New Transaction</h2>
-                    <form class="transaction-form">
-                        <div class="form-group">
-                            <label for="desc" class="form-label">Description:</label>
-                            <input
-                                type="text"
-                                id="desc"
-                                name="desc"
-                                class="form-input"
-                                placeholder="e.g., Grocery shopping"
-                                required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="amount" class="form-label">Amount:</label>
-                            <input
-                                type="number"
-                                id="amount"
-                                name="amount"
-                                class="form-input"
-                                placeholder="e.g., 50.00"
-                                required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="type" class="form-label">Type:</label>
-                            <select id="type" name="type" class="form-input" required>
-                                <option value="income">Income</option>
-                                <option value="expense">Expense</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="date" class="form-label">Date:</label>
-                            <input type="date" id="date" name="date" class="form-input" />
-                        </div>
-
-                        <div class="form-group button-group">
-                            <button type="submit" class="submit-button">Add Transaction</button>
-                        </div>
-                    </form>
-                </section>
-            </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox" id="remember" name="remember" /></label>
+                    <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="register-link">
+                    <p>Don't have an account? <a href="register.html">Register</a></p>
+                </div>
+            </form>
         </div>
         <script src="config.js"></script>
-
-        <!-- ✅ JS File linked as script (non-module) -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="main.js"></script>
-
-        <!-- 🌟 Elfsight AI Chatbot -->
-        <!-- Replace XXXXXXXX with your App ID from the Elfsight dashboard -->
-        <script src="https://elfsightcdn.com/platform.js" async></script>
-        <div class="elfsight-app-fd6c3ad1-ff0c-42df-b671-c993b32240cd" data-elfsight-app-lazy></div>
+        <script src="login.js"></script>
     </body>
 </html>

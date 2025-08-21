@@ -402,7 +402,7 @@ async function deleteTransaction(transactionId) {
 logoutBtn.addEventListener("click", () => {
     // Optional: Clear user session info (if using localStorage, cookies, etc.)
     // localStorage.clear();
-    window.location.href = "login.html"; // adjust if different filename
+    window.location.href = "index.html"; // adjust if different filename
 });
 
 // ========== 🚀 Initialize ==========

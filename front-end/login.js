@@ -25,7 +25,7 @@ document.getElementById("login-form").addEventListener("submit", async function 
             // Save user data in localStorage if needed
             localStorage.setItem("token", result.token);
             alert("Login successful!");
-            window.location.href = "index.html"; // Or dashboard
+            window.location.href = "main.html"; // Or dashboard
         } else {
             alert(result.message || "Login failed.");
         }

@@ -32,7 +32,7 @@ document.getElementById("register-form").addEventListener("submit", async functi
 
         if (response.ok && result.message === "User registered successfully") {
             alert("Registration successful! Please log in.");
-            window.location.href = "login.html";
+            window.location.href = "index.html";
         } else {
             alert(result.message || "Registration failed.");
         }
